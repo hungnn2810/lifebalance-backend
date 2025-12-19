@@ -1,0 +1,10 @@
+[*]
+root=true
+max_line_length=160
+resharper_possible_multiple_enumeration_highlighting=none
+resharper_csharp_naming_rule.constants=AA_BB
+resharper_csharp_naming_rule.enum_member=AA_BB, aa_bb, I+AaBb, aaBb_AaBb, AaBb+Local
+resharper_csharp_naming_rule.static_readonly=AA_BB, aa_bb, I+AaBb, aaBb_AaBb, AaBb+Local
+resharper_redundant_anonymous_type_property_name_highlighting=none
+resharper_unused_type_parameter_highlighting=none
+resharper_unused_parameter_local_highlighting=none
