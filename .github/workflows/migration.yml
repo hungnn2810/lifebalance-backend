@@ -1,0 +1,46 @@
+name: CI/CD Migration
+on:
+  push:
+    branches:
+      - develop
+      - test
+      - main
+    paths:
+      - sql/**
+  pull_request:
+    branches:
+      - develop
+      - test
+      - main
+    types: [closed]
+    paths:
+      - sql/**
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: 🐘 Build Migration Image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push docker image
+        working-directory: .
+        env:
+          DOCKER_IMAGE_NAME: hungnn2810/lifebalance-backend
+          TAG_SUFFIX: ${{ github.ref_name }}
+        run: |
+          docker build -t $DOCKER_IMAGE_NAME:migration-${{ github.sha }}-$TAG_SUFFIX \
+                      -t $DOCKER_IMAGE_NAME:migration-latest-$TAG_SUFFIX \
+                      -f Dockerfile-migration .
+          docker push $DOCKER_IMAGE_NAME:migration-${{ github.sha }}-$TAG_SUFFIX
+          docker push $DOCKER_IMAGE_NAME:migration-latest-$TAG_SUFFIX

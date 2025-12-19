@@ -1,7 +1,7 @@
-using System.Reflection.Metadata;
 using LifeBalance.Application.Exceptions.Filters;
 using LifeBalance.Application.Extensions;
 using LifeBalance.Persistence.Extensions;
+using MediatR;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
@@ -28,7 +28,7 @@ public class Program
                 options.SerializerSettings.DateParseHandling = DateParseHandling.None;
             });
 
-
+       
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();

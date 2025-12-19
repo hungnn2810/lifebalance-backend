@@ -1,9 +1,6 @@
-using Google.Apis.Auth;
 using LifeBalance.Application.Auth.Models;
 using LifeBalance.Application.Services.Abstractions;
-using LifeBalance.Domain.Enums;
 using MediatR;
-using Microsoft.Extensions.Configuration;
 
 namespace LifeBalance.Application.Auth.Commands.Handlers;
 

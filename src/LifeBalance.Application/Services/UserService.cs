@@ -1,4 +1,3 @@
-using LifeBalance.Application.Auth.Commands;
 using LifeBalance.Application.Repositories.Abstractions;
 using LifeBalance.Application.Services.Abstractions;
 using LifeBalance.Domain.Entities;
