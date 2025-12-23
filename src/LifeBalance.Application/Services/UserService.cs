@@ -1,5 +1,7 @@
+using LifeBalance.Application.Auth.Commands;
 using LifeBalance.Application.Repositories.Abstractions;
 using LifeBalance.Application.Services.Abstractions;
+using LifeBalance.Application.SharedKernel.Models;
 using LifeBalance.Domain.Entities;
 using LifeBalance.Domain.Enums;
 
@@ -9,9 +11,9 @@ public class UserService(IUnitOfWork unitOfWork) : IUserService
 {
     public async Task<User> FindOrCreateAsync(AuthProvider provider, string providerKey, string email, string name)
     {
+        await unitOfWork.BeginTransactionAsync();
         try
         {
-            await unitOfWork.BeginTransactionAsync();
             var userLogin = await unitOfWork.UserLogins.FindAsync(provider, providerKey);
 
             if (userLogin != null)
@@ -36,6 +38,20 @@ public class UserService(IUnitOfWork unitOfWork) : IUserService
             return user;
         }
         catch
+        {
+            await unitOfWork.RollbackAsync();
+            throw;
+        }
+    }
+
+    public async Task<BaseResponse> RegisterAsync(RegisterUser command)
+    {
+        await unitOfWork.BeginTransactionAsync();
+        try
+        {
+            var exists = unitOfWork.Users.AsQueryable().Where()
+        }
+        catch (Exception e)
         {
             await unitOfWork.RollbackAsync();
             throw;
