@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using LifeBalance.Domain.Enums;
 
 namespace LifeBalance.Domain.Entities;
@@ -7,7 +8,7 @@ public class UserLogin : IEntity<Guid>
     public Guid Id { get; set; }
     public Guid UserId { get; set; }
     public AuthProvider Provider { get; set; }  // Google | Facebook | Apple
-    public string ProviderKey { get; set; } // sub / id
+    [StringLength(128)]    public string ProviderKey { get; set; } // sub / id
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
     

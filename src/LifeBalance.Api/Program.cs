@@ -1,7 +1,6 @@
 using LifeBalance.Application.Exceptions.Filters;
 using LifeBalance.Application.Extensions;
 using LifeBalance.Persistence.Extensions;
-using MediatR;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 

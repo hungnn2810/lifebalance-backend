@@ -8,5 +8,5 @@ namespace LifeBalance.Application.Services.Abstractions;
 public interface IUserService
 {
     Task<User> FindOrCreateAsync(AuthProvider provider, string providerKey, string email, string name);
-    Task<BaseResponse> UpdateAsync(UpdateUser command);
+    Task<BaseResponse> UpdateAsync(UpdateUserInformation command);
 }

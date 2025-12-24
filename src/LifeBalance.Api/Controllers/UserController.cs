@@ -11,7 +11,7 @@ namespace LifeBalance.Api.Controllers;
 public class UserController(IMediator mediator) : ControllerBase
 {
     [HttpPut("{id:guid}")]
-    public async Task<IActionResult> UpdateAsync([FromRoute]Guid id,[FromBody] UpdateUser command)
+    public async Task<IActionResult> UpdateAsync([FromRoute] Guid id, [FromBody] UpdateUserInformation command)
     {
         command.Id = id;
         var response = await mediator.Send(command);

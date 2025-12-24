@@ -18,5 +18,6 @@ public static class ExceptionErrorCode
         public const string ERROR_VALIDATION_NOT_ACTIVE = "ERROR.ENTITY.VALIDATION.FIELD_NOT_ACTIVE";
         public const string ERROR_VALIDATION_INVALID = "ERROR.ENTITY.VALIDATION.FIELD_INVALID";
         public const string ERROR_VALIDATION_MAX_LENGTH = "ERROR.ENTITY.VALIDATION.MAX_LENGTH";
+        
     }
 }

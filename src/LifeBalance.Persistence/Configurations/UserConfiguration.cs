@@ -16,5 +16,9 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(u => u.Password).HasColumnName("password");
         builder.Property(u => u.CreatedAt).HasColumnName("created_at");
         builder.Property(u => u.UpdatedAt).HasColumnName("updated_at");
+        builder.HasMany(u => u.UserLogins).WithOne(x => x.User).HasForeignKey(u => u.UserId);
+        builder.HasOne(u => u.UserInformation).WithOne().HasForeignKey<UserInformation>(ui => ui.Id);
+        builder.HasMany(u => u.UserTracking).WithOne(ut => ut.User).HasForeignKey(ut => ut.UserId);
+        builder.HasMany(u => u.RefreshTokens).WithOne(rt => rt.User).HasForeignKey(rt => rt.UserId);
     }
 }

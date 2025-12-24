@@ -1,22 +1,19 @@
 services:
-  db:
+  postgresdb:
     image: postgres:17
     shm_size: 1g
     ports:
-      - "5432:5432"
+      - "5433:5432"
     command: postgres -c 'max_connections=250'
     environment:
       POSTGRES_PASSWORD: "Pass1234!"
     restart: always
   
   migration:
-    image: hungnn2810/lifebalance-backend:migration-latest-develop
-    environment:
-      ASPNETCORE_ENVIRONMENT: "Production"
-      AUTHENTICATION__GOOGLE__CLIENTID: "${{ GOOGLE_CLIENTID }}"
+    image: hungnn2810/lifebalance-backend:migration-latest
     depends_on:
-      - db
-    restart: "no"
+      - postgresdb
+    restart: on-failure
   
 #  service:
 #    image: hungnn2810/lifebalance-backend:migration-main

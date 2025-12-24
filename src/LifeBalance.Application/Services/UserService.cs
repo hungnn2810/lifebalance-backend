@@ -1,4 +1,3 @@
-using LifeBalance.Application.Auth.Commands;
 using LifeBalance.Application.Repositories.Abstractions;
 using LifeBalance.Application.Services.Abstractions;
 using LifeBalance.Application.SharedKernel.Models;
@@ -45,7 +44,7 @@ public class UserService(IUnitOfWork unitOfWork) : IUserService
         }
     }
 
-    public Task<BaseResponse> UpdateAsync(UpdateUser command)
+    public Task<BaseResponse> UpdateAsync(UpdateUserInformation command)
     {
         throw new NotImplementedException();
     }

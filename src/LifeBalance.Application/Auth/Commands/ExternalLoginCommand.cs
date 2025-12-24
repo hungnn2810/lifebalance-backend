@@ -4,7 +4,7 @@ using MediatR;
 
 namespace LifeBalance.Application.Auth.Commands;
 
-public class ExternalLogin : IRequest<LoginResponse>
+public class ExternalLoginCommand : IRequest<TokenResponse>
 {
     public string IdToken { get; set; }
     public AuthProvider Provider { get; set; }

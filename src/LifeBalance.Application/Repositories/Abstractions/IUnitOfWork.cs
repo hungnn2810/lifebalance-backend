@@ -8,4 +8,5 @@ public interface IUnitOfWork
     
     IUserRepository Users { get; }
     IUserLoginRepository UserLogins { get; }
+    IRefreshTokenRepository RefreshTokens { get; }
 }
