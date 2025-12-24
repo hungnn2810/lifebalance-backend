@@ -1,10 +1,10 @@
 namespace LifeBalance.Application.SharedKernel.Models;
 
-public class BaseResponse(bool success, string message)
+public class BaseResponse(bool isSuccess, string message)
 {
-    public bool Success { get; set; } = success;
+    public bool IsSuccess { get; set; } = isSuccess;
     public string Message { get; set; } = message;
 
-    public static BaseResponse CreateSuccess => new BaseResponse(true, string.Empty);
-    public static BaseResponse CreateFailure => new BaseResponse(false, string.Empty);
+    public static BaseResponse Success => new BaseResponse(true, string.Empty);
+    public static BaseResponse Failure => new BaseResponse(false, string.Empty);
 }

@@ -4,7 +4,7 @@ using MediatR;
 
 namespace LifeBalance.Application.Auth.Commands.Handlers;
 
-public class ExternalLoginHandler(IUserService userService, IEnumerable<IExternalAuthService> authServices, IJwtService jwtService)
+public class ExternalLoginHandler(IUserService userService, IEnumerable<IExternalAuthService> authServices, IAuthService jwtService)
     : IRequestHandler<ExternalLogin, LoginResponse>
 {
     public async Task<LoginResponse> Handle(ExternalLogin request, CancellationToken cancellationToken)
@@ -19,7 +19,7 @@ public class ExternalLoginHandler(IUserService userService, IEnumerable<IExterna
             authResult.Name
         );
 
-        var token = jwtService.Generate(user, authResult.Provider);
+        var token = jwtService.GenerateToken(user, authResult.Provider);
 
         return new LoginResponse(token);
     }

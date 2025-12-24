@@ -9,13 +9,13 @@ services:
       POSTGRES_PASSWORD: "Pass1234!"
     restart: always
     
-  service:
-    image: hungnn2810/lifebalance-backend:migration-main
-    ports:
-      - "5000:8080"
-    environment:
-      ASPNETCORE_ENVIRONMENT: "Production"
-      AUTHENTICATION__GOOGLE__CLIENTID: "${{ GOOGLE_CLIENTID }}"
-    depends_on:
-      - db
-    restart: always
+#  service:
+#    image: hungnn2810/lifebalance-backend:migration-main
+#    ports:
+#      - "5000:8080"
+#    environment:
+#      ASPNETCORE_ENVIRONMENT: "Production"
+#      AUTHENTICATION__GOOGLE__CLIENTID: "${{ GOOGLE_CLIENTID }}"
+#    depends_on:
+#      - db
+#    restart: always

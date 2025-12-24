@@ -1,3 +1,5 @@
+using LifeBalance.Application.Auth.Commands;
+using LifeBalance.Application.Auth.Validations;
 using LifeBalance.Application.Constants;
 using LifeBalance.Application.Services;
 using LifeBalance.Application.Services.Abstractions;
@@ -12,11 +14,16 @@ public static class ApplicationExtension
     {
         serviceCollection.AddMediatR(typeof(ApplicationExtension).Assembly);
 
-        serviceCollection.AddHttpClient(HttpClients.FACEBOOK, config => { config.BaseAddress = new Uri("https://graph.facebook.com"); });
-
-        serviceCollection.AddScoped<IJwtService, JwtService>();
+        serviceCollection.AddApplicationValidator();
+        serviceCollection.AddScoped<IAuthService, AuthService>();
         serviceCollection.AddScoped<IUserService, UserService>();
         serviceCollection.AddScoped<IExternalAuthService, GoogleAuthService>();
-        serviceCollection.AddScoped<IExternalAuthService, FacebookAuthService>();
+
+        serviceCollection.AddHttpClient(HttpClients.FACEBOOK, config => { config.BaseAddress = new Uri("https://graph.facebook.com"); });
+    }
+
+    private static void AddApplicationValidator(this IServiceCollection serviceCollection)
+    {
+        serviceCollection.AddSingleton<FluentValidation.IValidator<RegisterUser>, RegisterUserValidation>();
     }
 }

@@ -2,6 +2,7 @@ using LifeBalance.Application.Auth.Commands;
 using LifeBalance.Application.Repositories.Abstractions;
 using LifeBalance.Application.Services.Abstractions;
 using LifeBalance.Application.SharedKernel.Models;
+using LifeBalance.Application.Users.Commands;
 using LifeBalance.Domain.Entities;
 using LifeBalance.Domain.Enums;
 
@@ -44,17 +45,8 @@ public class UserService(IUnitOfWork unitOfWork) : IUserService
         }
     }
 
-    public async Task<BaseResponse> RegisterAsync(RegisterUser command)
+    public Task<BaseResponse> UpdateAsync(UpdateUser command)
     {
-        await unitOfWork.BeginTransactionAsync();
-        try
-        {
-            var exists = unitOfWork.Users.AsQueryable().Where()
-        }
-        catch (Exception e)
-        {
-            await unitOfWork.RollbackAsync();
-            throw;
-        }
+        throw new NotImplementedException();
     }
 }

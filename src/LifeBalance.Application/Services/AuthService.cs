@@ -1,24 +1,28 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using LifeBalance.Application.Auth.Commands;
+using LifeBalance.Application.Repositories.Abstractions;
 using LifeBalance.Application.Services.Abstractions;
+using LifeBalance.Application.SharedKernel.Models;
 using LifeBalance.Domain.Entities;
 using LifeBalance.Domain.Enums;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
 namespace LifeBalance.Application.Services;
 
-public class JwtService(IConfiguration configuration) : IJwtService
+public class AuthService(IConfiguration configuration, IUnitOfWork unitOfWork) : IAuthService
 {
-    public string Generate(User user, AuthProvider provider)
+    public string GenerateToken(User user, AuthProvider provider)
     {
         var secret = configuration["Jwt:Secret"] ??
-            throw new InvalidOperationException("Jwt_Secret is not configured");
+                     throw new InvalidOperationException("Jwt_Secret is not configured");
         var issuer = configuration["Jwt:Issuer"] ??
-            throw new InvalidOperationException("Jwt_Issuer is not configured");
+                     throw new InvalidOperationException("Jwt_Issuer is not configured");
         var audience = configuration["Jwt:Audience"] ??
-            throw new InvalidOperationException("Jwt_Audience is not configured");
+                       throw new InvalidOperationException("Jwt_Audience is not configured");
         if (!int.TryParse(configuration["Jwt:ExpireMinutes"], out var expireMinutes))
             throw new InvalidOperationException("Jwt:ExpireMinutes is invalid");
 
@@ -41,5 +45,32 @@ public class JwtService(IConfiguration configuration) : IJwtService
         );
 
         return new JwtSecurityTokenHandler().WriteToken(token);
+    }
+
+    public async Task<BaseResponse> RegisterAsync(RegisterUser command)
+    {
+        await unitOfWork.BeginTransactionAsync();
+        try
+        {
+            var existEmail = await unitOfWork.Users.AsQueryable()
+                .Where(x => x.Email == command.Email).AnyAsync();
+            if (existEmail)
+            {
+            }
+
+            var existUsername = await unitOfWork.Users.AsQueryable()
+                .Where(x => x.Name == command.Name).AnyAsync();
+            if (existUsername)
+            {
+                
+            }
+            
+            return BaseResponse.Success;
+        }
+        catch (Exception)
+        {
+            await unitOfWork.RollbackAsync();
+            throw;
+        }
     }
 }
