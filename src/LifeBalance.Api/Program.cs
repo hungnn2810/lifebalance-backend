@@ -1,4 +1,5 @@
 using System.Text;
+using LifeBalance.Api.Middlewares;
 using LifeBalance.Application.Exceptions.Filters;
 using LifeBalance.Application.Extensions;
 using LifeBalance.Persistence.Extensions;
@@ -42,7 +43,7 @@ public class Program
                     ClockSkew = TimeSpan.Zero // rất quan trọng
                 };
             });
-        
+
         builder.Services.AddAuthorization();
         builder.Services.AddControllers(options => { options.ExceptionHandling(); })
             .AddNewtonsoftJson(options =>
@@ -54,7 +55,7 @@ public class Program
                 options.SerializerSettings.DateParseHandling = DateParseHandling.None;
             });
 
-       
+
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
@@ -72,6 +73,12 @@ public class Program
 
         app.UseAuthentication();
         app.UseAuthorization();
+
+        app.UseWhen(
+            c => c.Request.Path.HasValue && !c.Request.Path.Value.StartsWith("/auth"),
+            b => b.UseMiddleware<UserContextMiddleware>()
+        );
+
         app.MapControllers();
 
         app.Run();

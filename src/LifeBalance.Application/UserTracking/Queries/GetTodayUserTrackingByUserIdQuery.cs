@@ -3,7 +3,7 @@ using MediatR;
 
 namespace LifeBalance.Application.UserTracking.Queries;
 
-public class GetUserTrackingByUserIdQuery(Guid userId) : IRequest<UserTrackingDto>
+public class GetTodayUserTrackingByUserIdQuery(Guid userId) : IRequest<UserTrackingDto>
 {
     public Guid UserId { get; set; } = userId;
 }

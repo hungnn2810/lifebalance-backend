@@ -2,6 +2,7 @@ using LifeBalance.Application.Exceptions;
 using LifeBalance.Application.Exceptions.Helpers;
 using LifeBalance.Application.Repositories.Abstractions;
 using LifeBalance.Application.Services.Abstractions;
+using LifeBalance.Application.SharedKernel.Abstractions;
 using LifeBalance.Application.SharedKernel.Models;
 using LifeBalance.Application.UserInfo.Commands;
 using LifeBalance.Application.UserInfo.Models;
@@ -12,7 +13,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LifeBalance.Application.Services;
 
-public class UserService(IUnitOfWork unitOfWork) : IUserService
+public class UserService(IUnitOfWork unitOfWork, IUserContext userContext) : IUserService
 {
     public async Task<User> FindOrCreateAsync(AuthProvider provider, string providerKey, string email, string name)
     {
@@ -75,9 +76,9 @@ public class UserService(IUnitOfWork unitOfWork) : IUserService
         }
     }
 
-    public async Task<UserInfoDto> FindInfoAsync(GetUserInfoByIdQuery byIdQuery)
+    public async Task<UserInfoDto> FindInfoAsync(GetUserInfoQuery query)
     {
-        var entity = await unitOfWork.UserInformation.FindAsync(byIdQuery.UserId);
+        var entity = await unitOfWork.UserInformation.FindAsync(userContext.Id);
         return entity == null
             ? throw new EntityNotFoundException(ExceptionErrorCode.ERROR_ENTITY_NOT_FOUND)
             : UserInfoDto.Create(entity);
@@ -88,11 +89,11 @@ public class UserService(IUnitOfWork unitOfWork) : IUserService
         await unitOfWork.BeginTransactionAsync();
         try
         {
-            var checkEntity = await unitOfWork.UserInformation.FindAsync(command.UserId) ??
+            var checkEntity = await unitOfWork.UserInformation.FindAsync(userContext.Id) ??
                 throw new EntityNotFoundException(ExceptionErrorCode.ERROR_ENTITY_NOT_FOUND);
 
             var entity = UpdateUserInfoCommand.Create(command);
-            await unitOfWork.UserInformation.UpdateAsync(command.UserId, entity);
+            await unitOfWork.UserInformation.UpdateAsync(userContext.Id, entity);
             await unitOfWork.CommitAsync();
 
             return BaseResponse.Success;

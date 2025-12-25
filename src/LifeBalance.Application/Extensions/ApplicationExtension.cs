@@ -4,6 +4,8 @@ using LifeBalance.Application.Auth.Validations;
 using LifeBalance.Application.Constants;
 using LifeBalance.Application.Services;
 using LifeBalance.Application.Services.Abstractions;
+using LifeBalance.Application.SharedKernel.Abstractions;
+using LifeBalance.Application.SharedKernel.Models;
 using LifeBalance.Application.UserInfo.Commands;
 using LifeBalance.Application.UserInfo.Validations;
 using MediatR;
@@ -17,6 +19,8 @@ public static class ApplicationExtension
     {
         serviceCollection.AddMediatR(typeof(ApplicationExtension).Assembly);
 
+        serviceCollection.AddScoped<IUserContext, UserContext>();
+        
         serviceCollection.AddApplicationValidator();
         serviceCollection.AddScoped<IAuthService, AuthService>();
         serviceCollection.AddScoped<IUserService, UserService>();

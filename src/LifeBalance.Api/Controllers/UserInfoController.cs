@@ -18,18 +18,16 @@ public class UserInfoController(IMediator mediator) : ControllerBase
         return Ok(response);
     }
 
-    [HttpGet("{id:guid}")]
-    public async Task<IActionResult> FindByIdAsync([FromRoute] Guid id)
+    [HttpGet]
+    public async Task<IActionResult> FindAsync()
     {
-        var query = new GetUserInfoByIdQuery(id);
-        var response = await mediator.Send(query);
+        var response = await mediator.Send(new GetUserInfoQuery());
         return Ok(response);
     }
 
-    [HttpPut("{id:guid}")]
-    public async Task<IActionResult> UpdateAsync([FromRoute] Guid id, [FromBody] UpdateUserInfoCommand command)
+    [HttpPut]
+    public async Task<IActionResult> UpdateAsync([FromBody] UpdateUserInfoCommand command)
     {
-        command.UserId = id;
         var response = await mediator.Send(command);
         return Accepted(response);
     }

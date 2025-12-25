@@ -8,7 +8,6 @@ public class UpdateUserInfoValidation : AbstractValidator<UpdateUserInfoCommand>
 {
     public UpdateUserInfoValidation()
     {
-        RuleFor(x => x.UserId).NotEmpty().WithMessage(ExceptionErrorCode.DetailCode.ERROR_VALIDATION_REQUIRED);
         RuleFor(x => x.Avatar).NotEmpty().WithMessage(ExceptionErrorCode.DetailCode.ERROR_VALIDATION_REQUIRED);
         RuleFor(x => x.Age).NotNull().WithMessage(ExceptionErrorCode.DetailCode.ERROR_VALIDATION_REQUIRED);
         RuleFor(x => x.Weight).NotNull().WithMessage(ExceptionErrorCode.DetailCode.ERROR_VALIDATION_REQUIRED);
