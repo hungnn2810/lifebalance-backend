@@ -5,7 +5,7 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0-alpine AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["src/LifeBalance.Api/LifeBalance.Api.csproj", "LifeBalance.Api/"]
-RUN dotnet restore "Idp/LifeBalance.Api.csproj"
+RUN dotnet restore "LifeBalance.Api/LifeBalance.Api.csproj"
 COPY src/ .
 WORKDIR "/src/LifeBalance.Api"
 RUN dotnet build "LifeBalance.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
