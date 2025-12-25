@@ -1,5 +1,6 @@
 using System.Linq.Expressions;
 using LifeBalance.Application.SharedKernel.Models;
+using LifeBalance.Domain.Enums;
 using MediatR;
 
 namespace LifeBalance.Application.UserInfo.Commands;
@@ -11,7 +12,7 @@ public class AddUserInfoCommand : IRequest<BaseResponse>
     public short Age { get; set; }
     public short Height { get; set; }
     public short Weight { get; set; }
-    public string FitnessGoals { get; set; }
+    public FitnessGoal[] FitnessGoals { get; set; }
 
     private static Expression<Func<AddUserInfoCommand, Domain.Entities.UserInformation>> Projection
     {
@@ -24,7 +25,7 @@ public class AddUserInfoCommand : IRequest<BaseResponse>
                 Age = command.Age,
                 Height = command.Height,
                 Weight = command.Weight,
-                FitnessGoals = command.FitnessGoals
+                FitnessGoalEnums = command.FitnessGoals
             };
         }
     }

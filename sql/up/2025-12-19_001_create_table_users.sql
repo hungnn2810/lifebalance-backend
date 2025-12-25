@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS user_information (
     age SMALLINT NOT NULL,
     weight SMALLINT NOT NULL,
     height SMALLINT NOT NULL,
-    fitness_goals VARCHAR(64) NOT NULL,
+    fitness_goals TEXT[] NOT NULL DEFAULT '{}',
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT pk_user_information PRIMARY KEY(user_id),

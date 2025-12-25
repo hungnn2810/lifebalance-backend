@@ -1,4 +1,5 @@
 using LifeBalance.Domain.Entities;
+using LifeBalance.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -15,7 +16,7 @@ public class UserInformationConfiguration : IEntityTypeConfiguration<UserInforma
         builder.Property(x => x.Age).HasColumnName("age");
         builder.Property(x => x.Weight).HasColumnName("weight");
         builder.Property(x => x.Height).HasColumnName("height");
-        builder.Property(x => x.FitnessGoals).HasColumnName("fitness_goals");
+        builder.Property(x => x.FitnessGoals).HasColumnType("text[]").HasColumnName("fitness_goals");
         builder.Property(x => x.CreatedAt).HasColumnName("created_at");
         builder.Property(x => x.UpdatedAt).HasColumnName("updated_at");
     }

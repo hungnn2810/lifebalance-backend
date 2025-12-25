@@ -1,6 +1,9 @@
+using System.Text;
 using LifeBalance.Application.Exceptions.Filters;
 using LifeBalance.Application.Extensions;
 using LifeBalance.Persistence.Extensions;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
@@ -15,7 +18,31 @@ public class Program
         builder.Logging.ClearProviders();
         builder.Logging.AddConsole();
 
-        // Add services to the container.
+        builder.Services
+            .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
+            {
+                var secret = builder.Configuration["Jwt:Secret"]
+                    ?? throw new InvalidOperationException("Jwt:Secret not configured");
+
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+
+                    ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                    ValidAudience = builder.Configuration["Jwt:Audience"],
+
+                    IssuerSigningKey = new SymmetricSecurityKey(
+                        Encoding.UTF8.GetBytes(secret)
+                    ),
+
+                    ClockSkew = TimeSpan.Zero // rất quan trọng
+                };
+            });
+        
         builder.Services.AddAuthorization();
         builder.Services.AddControllers(options => { options.ExceptionHandling(); })
             .AddNewtonsoftJson(options =>
@@ -43,6 +70,7 @@ public class Program
             app.UseSwaggerUI();
         }
 
+        app.UseAuthentication();
         app.UseAuthorization();
         app.MapControllers();
 

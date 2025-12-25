@@ -1,5 +1,6 @@
 using System.Linq.Expressions;
 using LifeBalance.Domain.Entities;
+using LifeBalance.Domain.Enums;
 
 namespace LifeBalance.Application.UserInfo.Models;
 
@@ -10,7 +11,7 @@ public class UserInfoDto
     public short Age { get; set; }
     public short Weight { get; set; }
     public short Height { get; set; }
-    public string FitnessGoals { get; set; }
+    public FitnessGoal[] FitnessGoals { get; set; }
     public DateTime UpdatedAt { get; set; }
     
     private static Expression<Func<UserInformation, UserInfoDto>> Projection
@@ -24,7 +25,7 @@ public class UserInfoDto
                 Age = entity.Age,
                 Weight = entity.Weight,
                 Height = entity.Height,
-                FitnessGoals = entity.FitnessGoals,
+                FitnessGoals = entity.FitnessGoalEnums,
                 UpdatedAt = entity.UpdatedAt
             };
         }

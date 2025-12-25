@@ -221,6 +221,18 @@ public class AuthService : IAuthService
                 ExpiresAt = DateTime.UtcNow.AddDays(_refreshExpireDays), // Refresh token valid for 30 days
             });
 
+            // Remove expired or revoked tokens
+            var tokensToRemove = await _unitOfWork.RefreshTokens.AsQueryable()
+                .Where(x => x.UserId == refreshToken.UserId &&
+                    (x.ExpiresAt <= DateTime.UtcNow || x.RevokedAt != null))
+                .ToListAsync();
+            
+            tokensToRemove.Add(refreshToken);
+            foreach (var token in tokensToRemove)
+            {
+                await _unitOfWork.RefreshTokens.RemoveAsync(token.Id);
+            }
+
             await _unitOfWork.CommitAsync();
 
             return new TokenResponse(

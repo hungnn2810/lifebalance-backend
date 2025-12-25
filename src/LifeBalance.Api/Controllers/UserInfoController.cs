@@ -12,22 +12,22 @@ namespace LifeBalance.Api.Controllers;
 public class UserInfoController(IMediator mediator) : ControllerBase
 {
     [HttpPost]
-    public async Task<IActionResult> AddUserInfo([FromBody] AddUserInfoCommand command)
+    public async Task<IActionResult> AddAsync([FromBody] AddUserInfoCommand command)
     {
         var response = await mediator.Send(command);
         return Ok(response);
     }
 
     [HttpGet("{id:guid}")]
-    public async Task<IActionResult> GetUserInfo([FromRoute] Guid id)
+    public async Task<IActionResult> FindByIdAsync([FromRoute] Guid id)
     {
-        var query = new GetUserInfoQuery(id);
+        var query = new GetUserInfoByIdQuery(id);
         var response = await mediator.Send(query);
         return Ok(response);
     }
 
     [HttpPut("{id:guid}")]
-    public async Task<IActionResult> UpdateUserInfo([FromRoute] Guid id, [FromBody] UpdateUserInfoCommand command)
+    public async Task<IActionResult> UpdateAsync([FromRoute] Guid id, [FromBody] UpdateUserInfoCommand command)
     {
         command.UserId = id;
         var response = await mediator.Send(command);

@@ -33,14 +33,28 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push docker image
-        working-directory: .
-        env:
-          DOCKER_IMAGE_NAME: hungnn2810/lifebalance-backend
-          TAG_SUFFIX: ${{ github.ref_name }}
+      - name: Set docker tags
+        id: meta
         run: |
-          docker build -t $DOCKER_IMAGE_NAME:migration-${{ github.sha }}-$TAG_SUFFIX \
-                      -t $DOCKER_IMAGE_NAME:migration-latest-$TAG_SUFFIX \
-                      -f Dockerfile-migration .
-          docker push $DOCKER_IMAGE_NAME:migration-${{ github.sha }}-$TAG_SUFFIX
-          docker push $DOCKER_IMAGE_NAME:migration-latest-$TAG_SUFFIX
+          IMAGE=hungnn2810/lifebalance-backend
+          BRANCH=${GITHUB_REF_NAME}
+          SHA=${GITHUB_SHA}
+          
+          if [ "$BRANCH" = "main" ]; then
+            LATEST_TAG="$IMAGE:latest"
+          else
+            LATEST_TAG="$IMAGE:latest-$BRANCH"
+          fi
+          
+          echo "tags<<EOF" >> $GITHUB_OUTPUT
+          echo "$IMAGE:$SHA-$BRANCH" >> $GITHUB_OUTPUT
+          echo "$LATEST_TAG" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Build & push service image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: Dockerfile
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}

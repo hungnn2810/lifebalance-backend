@@ -11,6 +11,7 @@ public static class PersistenceExtension
 {
     public static void AddPersistenceService(this IServiceCollection serviceCollection)
     {
+        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
         serviceCollection.AddDbContextPool<AppDbContext>((service, option) =>
         {
             var configuration = service.GetService<IConfiguration>();

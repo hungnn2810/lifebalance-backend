@@ -75,9 +75,9 @@ public class UserService(IUnitOfWork unitOfWork) : IUserService
         }
     }
 
-    public async Task<UserInfoDto> FindInfoAsync(GetUserInfoQuery query)
+    public async Task<UserInfoDto> FindInfoAsync(GetUserInfoByIdQuery byIdQuery)
     {
-        var entity = await unitOfWork.UserInformation.FindAsync(query.UserId);
+        var entity = await unitOfWork.UserInformation.FindAsync(byIdQuery.UserId);
         return entity == null
             ? throw new EntityNotFoundException(ExceptionErrorCode.ERROR_ENTITY_NOT_FOUND)
             : UserInfoDto.Create(entity);
