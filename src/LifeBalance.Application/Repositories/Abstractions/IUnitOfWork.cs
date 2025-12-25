@@ -6,7 +6,8 @@ public interface IUnitOfWork
     Task RollbackAsync();
     Task BeginTransactionAsync();
     
+    IRefreshTokenRepository RefreshTokens { get; }
     IUserRepository Users { get; }
     IUserLoginRepository UserLogins { get; }
-    IRefreshTokenRepository RefreshTokens { get; }
+    IUserInformationRepository UserInformation { get; }
 }

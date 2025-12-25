@@ -11,10 +11,8 @@ public class RegisterValidation : AbstractValidator<RegisterCommand>
     {
         RuleFor(x => x.Email).NotEmpty().WithMessage(ExceptionErrorCode.DetailCode.ERROR_VALIDATION_REQUIRED)
             .Must(ValidatorHelper.IsValidEmailFormat).WithMessage(ExceptionErrorCode.DetailCode.ERROR_VALIDATION_INVALID);
-        
         RuleFor(x => x.Password).NotEmpty().WithMessage(ExceptionErrorCode.DetailCode.ERROR_VALIDATION_REQUIRED)
             .MaximumLength(128).WithMessage(ExceptionErrorCode.DetailCode.ERROR_VALIDATION_MAX_LENGTH);
-       
         RuleFor(x => x.Name).NotEmpty().WithMessage(ExceptionErrorCode.DetailCode.ERROR_VALIDATION_REQUIRED);
     }
 }

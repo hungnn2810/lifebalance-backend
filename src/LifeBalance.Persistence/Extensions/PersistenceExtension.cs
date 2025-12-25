@@ -20,9 +20,10 @@ public static class PersistenceExtension
                 .EnableDetailedErrors();
         });
 
+        serviceCollection.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
         serviceCollection.AddScoped<IUserRepository, UserRepository>();
         serviceCollection.AddScoped<IUserLoginRepository, UserLoginRepository>();
-        serviceCollection.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+        serviceCollection.AddScoped<IUserInformationRepository, UserInformationRepository>();;
         serviceCollection.AddScoped<IUnitOfWork, UnitOfWork>();
     }
 }

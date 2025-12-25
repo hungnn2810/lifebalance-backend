@@ -10,7 +10,6 @@ public class LoginValidation : AbstractValidator<LoginCommand>
     public LoginValidation()
     {
         RuleFor(c => c.Email).NotEmpty().WithMessage(ExceptionErrorCode.DetailCode.ERROR_VALIDATION_REQUIRED);
-
         RuleFor(c => c.Password).NotEmpty().WithMessage(ExceptionErrorCode.DetailCode.ERROR_VALIDATION_REQUIRED);
     }
 }

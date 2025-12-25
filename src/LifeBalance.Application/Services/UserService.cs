@@ -1,9 +1,14 @@
+using LifeBalance.Application.Exceptions;
+using LifeBalance.Application.Exceptions.Helpers;
 using LifeBalance.Application.Repositories.Abstractions;
 using LifeBalance.Application.Services.Abstractions;
 using LifeBalance.Application.SharedKernel.Models;
-using LifeBalance.Application.Users.Commands;
+using LifeBalance.Application.UserInfo.Commands;
+using LifeBalance.Application.UserInfo.Models;
+using LifeBalance.Application.UserInfo.Queries;
 using LifeBalance.Domain.Entities;
 using LifeBalance.Domain.Enums;
+using Microsoft.EntityFrameworkCore;
 
 namespace LifeBalance.Application.Services;
 
@@ -44,8 +49,58 @@ public class UserService(IUnitOfWork unitOfWork) : IUserService
         }
     }
 
-    public Task<BaseResponse> UpdateAsync(UpdateUserInformation command)
+    public async Task<BaseResponse> AddInfoAsync(AddUserInfoCommand command)
     {
-        throw new NotImplementedException();
+        await unitOfWork.BeginTransactionAsync();
+        try
+        {
+            var exists = await unitOfWork.UserInformation.AsQueryable()
+                .Where(x => x.Id == command.UserId).AnyAsync();
+            if (exists)
+            {
+                throw EntityValidationExceptionHelper.GenerateException(nameof(command.UserId),
+                    ExceptionErrorCode.DetailCode.ERROR_VALIDATION_DUPLICATED);
+            }
+
+            var entity = AddUserInfoCommand.Create(command);
+            await unitOfWork.UserInformation.AddAsync(entity);
+            await unitOfWork.CommitAsync();
+
+            return BaseResponse.Success;
+        }
+        catch
+        {
+            await unitOfWork.RollbackAsync();
+            throw;
+        }
+    }
+
+    public async Task<UserInfoDto> FindInfoAsync(GetUserInfoQuery query)
+    {
+        var entity = await unitOfWork.UserInformation.FindAsync(query.UserId);
+        return entity == null
+            ? throw new EntityNotFoundException(ExceptionErrorCode.ERROR_ENTITY_NOT_FOUND)
+            : UserInfoDto.Create(entity);
+    }
+
+    public async Task<BaseResponse> UpdateInfoAsync(UpdateUserInfoCommand command)
+    {
+        await unitOfWork.BeginTransactionAsync();
+        try
+        {
+            var checkEntity = await unitOfWork.UserInformation.FindAsync(command.UserId) ??
+                throw new EntityNotFoundException(ExceptionErrorCode.ERROR_ENTITY_NOT_FOUND);
+
+            var entity = UpdateUserInfoCommand.Create(command);
+            await unitOfWork.UserInformation.UpdateAsync(command.UserId, entity);
+            await unitOfWork.CommitAsync();
+
+            return BaseResponse.Success;
+        }
+        catch
+        {
+            await unitOfWork.RollbackAsync();
+            throw;
+        }
     }
 }

@@ -6,9 +6,11 @@ namespace LifeBalance.Persistence.Repositories;
 
 public class UnitOfWork(
     AppDbContext context,
+    IRefreshTokenRepository refreshTokens,
     IUserRepository users,
     IUserLoginRepository userLogins,
-    IRefreshTokenRepository refreshTokens) : IUnitOfWork
+    IUserInformationRepository userInfo
+) : IUnitOfWork
 {
     private AppDbContext Context { get; set; } = context;
     private IDbContextTransaction _transaction;
@@ -37,7 +39,8 @@ public class UnitOfWork(
         }
     }
 
+    public IRefreshTokenRepository RefreshTokens { get; private set; } = refreshTokens;
     public IUserRepository Users { get; private set; } = users;
     public IUserLoginRepository UserLogins { get; private set; } = userLogins;
-    public IRefreshTokenRepository RefreshTokens { get; private set; } = refreshTokens;
+    public IUserInformationRepository UserInformation { get; private set; } = userInfo;
 }

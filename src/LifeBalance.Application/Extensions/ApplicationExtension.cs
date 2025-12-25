@@ -4,6 +4,8 @@ using LifeBalance.Application.Auth.Validations;
 using LifeBalance.Application.Constants;
 using LifeBalance.Application.Services;
 using LifeBalance.Application.Services.Abstractions;
+using LifeBalance.Application.UserInfo.Commands;
+using LifeBalance.Application.UserInfo.Validations;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -29,5 +31,7 @@ public static class ApplicationExtension
         serviceCollection.AddSingleton<IValidator<ExternalLoginCommand>, ExternalLoginValidation>();
         serviceCollection.AddSingleton<IValidator<LoginCommand>, LoginValidation>();
         serviceCollection.AddSingleton<IValidator<RefreshTokenCommand>, RefreshTokenValidation>();
+        serviceCollection.AddSingleton<IValidator<AddUserInfoCommand>, AddUserInfoValidation>();
+        serviceCollection.AddSingleton<IValidator<UpdateUserInfoCommand>, UpdateUserInfoValidation>();
     }
 }
