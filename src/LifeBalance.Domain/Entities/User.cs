@@ -8,6 +8,7 @@ public class User : IEntity<Guid>
     [StringLength(128)] public string Email { get; set; }
     [StringLength(128)] public string Name { get; set; }
     [StringLength(1024)] public string Password { get; set; }
+    [StringLength(8)] public string Language { get; set; } = "en";
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 

@@ -1,3 +1,5 @@
+using LifeBalance.Application.UserTracking.Commands;
+using LifeBalance.Application.UserTracking.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -9,5 +11,25 @@ namespace LifeBalance.Api.Controllers;
 [Route("[controller]")]
 public class UserTrackingController(IMediator mediator) : ControllerBase
 {
+    [HttpGet]
+    public async Task<IActionResult> GetAsync([FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
+    {
+        var response = await mediator.Send(new GetUserTrackingQuery(startDate, endDate));
+        return Ok(response);
+    }
     
+    [HttpPost]
+    public async Task<IActionResult> AddAsync([FromBody] AddUserTrackingCommand command)
+    {
+        var response = await mediator.Send(command);
+        return Ok(response);
+    }
+
+    [HttpPut]
+    public async Task<IActionResult> UpdateAsync([FromRoute] Guid id, [FromBody] UpdateUserTrackingCommand command)
+    {
+        command.Id = id;
+        var response = await mediator.Send(command);
+        return Accepted(response);
+    }
 }

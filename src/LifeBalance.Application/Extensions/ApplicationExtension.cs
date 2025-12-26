@@ -23,8 +23,9 @@ public static class ApplicationExtension
         
         serviceCollection.AddApplicationValidator();
         serviceCollection.AddScoped<IAuthService, AuthService>();
-        serviceCollection.AddScoped<IUserService, UserService>();
         serviceCollection.AddScoped<IExternalAuthService, GoogleAuthService>();
+        serviceCollection.AddScoped<IUserService, UserService>();
+        serviceCollection.AddScoped<IUserTrackingService, UserTrackingService>();
 
         serviceCollection.AddHttpClient(HttpClients.FACEBOOK, config => { config.BaseAddress = new Uri("https://graph.facebook.com"); });
     }

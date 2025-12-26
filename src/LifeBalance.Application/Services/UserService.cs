@@ -89,7 +89,7 @@ public class UserService(IUnitOfWork unitOfWork, IUserContext userContext) : IUs
         await unitOfWork.BeginTransactionAsync();
         try
         {
-            var checkEntity = await unitOfWork.UserInformation.FindAsync(userContext.Id) ??
+            _ = await unitOfWork.UserInformation.FindAsync(userContext.Id) ??
                 throw new EntityNotFoundException(ExceptionErrorCode.ERROR_ENTITY_NOT_FOUND);
 
             var entity = UpdateUserInfoCommand.Create(command);

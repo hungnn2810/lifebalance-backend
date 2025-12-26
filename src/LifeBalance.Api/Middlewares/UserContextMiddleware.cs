@@ -21,9 +21,13 @@ public class UserContextMiddleware(RequestDelegate next)
             await context.ChallengeAsync();
             return;
         }
+        
+        var language = context.User.FindFirst("language")?.Value ?? "en";
+        
         if (context.RequestServices.GetService(typeof(IUserContext)) is IUserContext userContext)
         {
             userContext.SetId(Guid.Parse(id));
+            userContext.SetLanguage(language);
         }
         
         await next(context);

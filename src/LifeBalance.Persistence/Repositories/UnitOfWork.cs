@@ -9,7 +9,8 @@ public class UnitOfWork(
     IRefreshTokenRepository refreshTokens,
     IUserRepository users,
     IUserLoginRepository userLogins,
-    IUserInformationRepository userInfo
+    IUserInformationRepository userInfo,
+    IUserTrackingRepository userTracking
 ) : IUnitOfWork
 {
     private AppDbContext Context { get; set; } = context;
@@ -43,4 +44,5 @@ public class UnitOfWork(
     public IUserRepository Users { get; private set; } = users;
     public IUserLoginRepository UserLogins { get; private set; } = userLogins;
     public IUserInformationRepository UserInformation { get; private set; } = userInfo;
+    public IUserTrackingRepository UserTracking { get; private set; } = userTracking;
 }
