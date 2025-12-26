@@ -8,6 +8,9 @@ using LifeBalance.Application.SharedKernel.Abstractions;
 using LifeBalance.Application.SharedKernel.Models;
 using LifeBalance.Application.UserInfo.Commands;
 using LifeBalance.Application.UserInfo.Validations;
+using LifeBalance.Application.UserTracking.Commands;
+using LifeBalance.Application.UserTracking.Queries;
+using LifeBalance.Application.UserTracking.Validations;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -38,5 +41,8 @@ public static class ApplicationExtension
         serviceCollection.AddSingleton<IValidator<RefreshTokenCommand>, RefreshTokenValidation>();
         serviceCollection.AddSingleton<IValidator<AddUserInfoCommand>, AddUserInfoValidation>();
         serviceCollection.AddSingleton<IValidator<UpdateUserInfoCommand>, UpdateUserInfoValidation>();
+        serviceCollection.AddSingleton<IValidator<AddUserTrackingCommand>, AddUserTrackingValidation>();
+        serviceCollection.AddSingleton<IValidator<UpdateUserTrackingCommand>, UpdateUserTrackingValidation>();
+        serviceCollection.AddSingleton<IValidator<GetUserTrackingQuery>, GetUserTrackingValidation>();
     }
 }

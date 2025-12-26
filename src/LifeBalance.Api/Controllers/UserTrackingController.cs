@@ -25,7 +25,7 @@ public class UserTrackingController(IMediator mediator) : ControllerBase
         return Ok(response);
     }
 
-    [HttpPut]
+    [HttpPut("{id:guid}")]
     public async Task<IActionResult> UpdateAsync([FromRoute] Guid id, [FromBody] UpdateUserTrackingCommand command)
     {
         command.Id = id;
