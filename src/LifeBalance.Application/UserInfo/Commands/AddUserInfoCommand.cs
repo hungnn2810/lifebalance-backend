@@ -7,7 +7,6 @@ namespace LifeBalance.Application.UserInfo.Commands;
 
 public class AddUserInfoCommand : IRequest<BaseResponse>
 {
-    public Guid UserId { get; set; }
     public string Avatar { get; set; }
     public short Age { get; set; }
     public short Height { get; set; }
@@ -20,7 +19,6 @@ public class AddUserInfoCommand : IRequest<BaseResponse>
         {
             return command => new Domain.Entities.UserInformation
             {
-                Id = command.UserId,
                 Avatar = command.Avatar,
                 Age = command.Age,
                 Height = command.Height,

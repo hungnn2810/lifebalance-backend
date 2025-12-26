@@ -41,6 +41,6 @@ CREATE TABLE IF NOT EXISTS user_tracking (
     workout_streak INT NOT NULL DEFAULT 0,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT pk_user_tracking PRIMARY KEY(user_id),
+    CONSTRAINT pk_user_tracking PRIMARY KEY(id),
     CONSTRAINT pk_user_tracking_user_id FOREIGN KEY (user_id) REFERENCES users(id)
 );

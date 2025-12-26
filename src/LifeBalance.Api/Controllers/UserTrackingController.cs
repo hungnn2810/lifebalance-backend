@@ -8,7 +8,7 @@ namespace LifeBalance.Api.Controllers;
 
 [Authorize]
 [ApiController]
-[Route("[controller]")]
+[Route("user-tracking")]
 public class UserTrackingController(IMediator mediator) : ControllerBase
 {
     [HttpGet]

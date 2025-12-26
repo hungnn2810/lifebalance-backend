@@ -1,5 +1,4 @@
 using LifeBalance.Application.Exceptions;
-using LifeBalance.Application.Exceptions.Helpers;
 using LifeBalance.Application.Repositories.Abstractions;
 using LifeBalance.Application.Services.Abstractions;
 using LifeBalance.Application.SharedKernel.Abstractions;
@@ -9,7 +8,6 @@ using LifeBalance.Application.UserInfo.Models;
 using LifeBalance.Application.UserInfo.Queries;
 using LifeBalance.Domain.Entities;
 using LifeBalance.Domain.Enums;
-using Microsoft.EntityFrameworkCore;
 
 namespace LifeBalance.Application.Services;
 
@@ -55,15 +53,9 @@ public class UserService(IUnitOfWork unitOfWork, IUserContext userContext) : IUs
         await unitOfWork.BeginTransactionAsync();
         try
         {
-            var exists = await unitOfWork.UserInformation.AsQueryable()
-                .Where(x => x.Id == command.UserId).AnyAsync();
-            if (exists)
-            {
-                throw EntityValidationExceptionHelper.GenerateException(nameof(command.UserId),
-                    ExceptionErrorCode.DetailCode.ERROR_VALIDATION_DUPLICATED);
-            }
-
             var entity = AddUserInfoCommand.Create(command);
+            entity.Id = userContext.Id;
+            
             await unitOfWork.UserInformation.AddAsync(entity);
             await unitOfWork.CommitAsync();
 

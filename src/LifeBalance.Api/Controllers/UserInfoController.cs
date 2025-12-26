@@ -8,7 +8,7 @@ namespace LifeBalance.Api.Controllers;
 
 [Authorize]
 [ApiController]
-[Route("[controller]")]
+[Route("user-info")]
 public class UserInfoController(IMediator mediator) : ControllerBase
 {
     [HttpPost]
