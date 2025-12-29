@@ -4,7 +4,7 @@ using LifeBalance.Application.UserTracking.Commands;
 
 namespace LifeBalance.Application.UserTracking.Validations;
 
-public class AddUserTrackingValidation : AbstractValidator<AddUserTrackingCommand>
+public class AddUserTrackingValidation : AbstractValidator<AddOrUpdateUserTrackingCommand>
 {
     public AddUserTrackingValidation()
     {

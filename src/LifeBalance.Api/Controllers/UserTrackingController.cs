@@ -19,17 +19,9 @@ public class UserTrackingController(IMediator mediator) : ControllerBase
     }
     
     [HttpPost]
-    public async Task<IActionResult> AddAsync([FromBody] AddUserTrackingCommand command)
+    public async Task<IActionResult> AddOrUpdateAsync([FromBody] AddOrUpdateUserTrackingCommand command)
     {
         var response = await mediator.Send(command);
         return Ok(response);
-    }
-
-    [HttpPut("{id:guid}")]
-    public async Task<IActionResult> UpdateAsync([FromRoute] Guid id, [FromBody] UpdateUserTrackingCommand command)
-    {
-        command.Id = id;
-        var response = await mediator.Send(command);
-        return Accepted(response);
     }
 }

@@ -19,45 +19,34 @@ public class UserTrackingService(IUnitOfWork unitOfWork, IUserContext userContex
         return UserTrackingDto.Create(entity);
     }
 
-    public async Task<UserTrackingDto> AddAsync(AddUserTrackingCommand command)
+    public async Task<UserTrackingDto> AddOrUpdateAsync(AddOrUpdateUserTrackingCommand command)
     {
         await unitOfWork.BeginTransactionAsync();
         try
         {
-            var entity = AddUserTrackingCommand.Create(command);
+            // Check if record for the date range already exists
+            var checkEntity = await unitOfWork.UserTracking.AsQueryable()
+                .Where(x => command.StartDate <= x.CreatedAt && x.CreatedAt <= command.EndDate && x.UserId == userContext.Id)
+                .FirstOrDefaultAsync();
+
+            if (checkEntity != null)
+            {
+                checkEntity.Calories = command.Calories;
+                checkEntity.Steps = command.Steps;
+                checkEntity.WorkoutStreak = command.WorkoutStreak;
+                checkEntity.UpdatedAt = DateTime.UtcNow;
+
+                await unitOfWork.CommitAsync();
+                return UserTrackingDto.Create(checkEntity);
+            }
+            
+            var entity = AddOrUpdateUserTrackingCommand.Create(command);
             entity.UserId = userContext.Id;
             
             var response = await unitOfWork.UserTracking.AddAsync(entity);
             await unitOfWork.CommitAsync();
             
             return UserTrackingDto.Create(response);
-        }
-        catch (Exception e)
-        {
-            await unitOfWork.RollbackAsync();
-            throw;
-        }
-    }
-
-    public async Task<UserTrackingDto> UpdateAsync(UpdateUserTrackingCommand command)
-    {
-        await unitOfWork.BeginTransactionAsync();
-        try
-        {
-            var checkEntity = await unitOfWork.UserTracking.AsQueryable()
-                .Where(x => x.Id == command.Id && x.UserId == userContext.Id)
-                .FirstOrDefaultAsync();
-            if (checkEntity == null)
-                throw new Exception("User tracking not found");
-
-            var entity = UpdateUserTrackingCommand.Create(command);
-            entity.UserId = userContext.Id;
-            
-            var response = await unitOfWork.UserTracking.UpdateAsync(checkEntity.Id, entity);
-            await unitOfWork.CommitAsync();
-            
-            return UserTrackingDto.Create(response);
-            
         }
         catch (Exception e)
         {

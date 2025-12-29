@@ -73,12 +73,17 @@ public class AuthService : IAuthService
     {
         var claims = new List<Claim>
         {
-            new(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
-            new(JwtRegisteredClaimNames.Email, user.Email ?? ""),
-            new(JwtRegisteredClaimNames.Name, user.Name),
-            new("language", user.Language),
+            new(ClaimTypes.NameIdentifier, user.Id.ToString()),
+            new(ClaimTypes.Email, user.Email),
+            new(ClaimTypes.Name, user.Name),
+
+            // ⬇️ QUAN TRỌNG
+            new(ClaimTypes.Role, "ADMIN"),
+
             new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-            new(JwtRegisteredClaimNames.Iat, DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString(), ClaimValueTypes.Integer64)
+            new(JwtRegisteredClaimNames.Iat,
+                DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString(),
+                ClaimValueTypes.Integer64)
         };
 
         if (provider.HasValue)
@@ -227,7 +232,7 @@ public class AuthService : IAuthService
                 .Where(x => x.UserId == refreshToken.UserId &&
                     (x.ExpiresAt <= DateTime.UtcNow || x.RevokedAt != null))
                 .ToListAsync();
-            
+
             tokensToRemove.Add(refreshToken);
             foreach (var token in tokensToRemove)
             {

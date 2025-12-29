@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using System.Text;
 using LifeBalance.Api.Middlewares;
 using LifeBalance.Application.Exceptions.Filters;
@@ -25,7 +26,7 @@ public class Program
             {
                 var secret = builder.Configuration["Jwt:Secret"]
                     ?? throw new InvalidOperationException("Jwt:Secret not configured");
-
+                
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuer = true,
@@ -35,16 +36,16 @@ public class Program
 
                     ValidIssuer = builder.Configuration["Jwt:Issuer"],
                     ValidAudience = builder.Configuration["Jwt:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret)),
 
-                    IssuerSigningKey = new SymmetricSecurityKey(
-                        Encoding.UTF8.GetBytes(secret)
-                    ),
-
-                    ClockSkew = TimeSpan.Zero // rất quan trọng
+                    // ⬇️ QUAN TRỌNG
+                    RoleClaimType = ClaimTypes.Role
                 };
             });
 
-        builder.Services.AddAuthorization();
+        // builder.Services.AddAuthorizationBuilder()
+        //     .AddPolicy("AdminOnly", policy => policy.RequireRole("ADMIN"));
+        
         builder.Services.AddControllers(options => { options.ExceptionHandling(); })
             .AddNewtonsoftJson(options =>
             {
@@ -54,8 +55,7 @@ public class Program
                 options.SerializerSettings.DateFormatString = "yyyy-MM-ddTHH:mm:ss.ffff";
                 options.SerializerSettings.DateParseHandling = DateParseHandling.None;
             });
-
-
+        
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();

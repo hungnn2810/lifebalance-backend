@@ -41,8 +41,7 @@ public static class ApplicationExtension
         serviceCollection.AddSingleton<IValidator<RefreshTokenCommand>, RefreshTokenValidation>();
         serviceCollection.AddSingleton<IValidator<AddUserInfoCommand>, AddUserInfoValidation>();
         serviceCollection.AddSingleton<IValidator<UpdateUserInfoCommand>, UpdateUserInfoValidation>();
-        serviceCollection.AddSingleton<IValidator<AddUserTrackingCommand>, AddUserTrackingValidation>();
-        serviceCollection.AddSingleton<IValidator<UpdateUserTrackingCommand>, UpdateUserTrackingValidation>();
+        serviceCollection.AddSingleton<IValidator<AddOrUpdateUserTrackingCommand>, AddUserTrackingValidation>();
         serviceCollection.AddSingleton<IValidator<GetUserTrackingQuery>, GetUserTrackingValidation>();
     }
 }
