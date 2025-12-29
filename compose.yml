@@ -1,6 +1,7 @@
-services:
+services: 
   postgresdb:
     image: postgres:17
+    container_name: postgresdb
     shm_size: 1g
     ports:
       - "5433:5432"
@@ -9,14 +10,30 @@ services:
       POSTGRES_PASSWORD: "Pass1234!"
     restart: always
   
+  minio:
+    image: minio/minio
+    container_name: minio
+    ports:
+      - "9090:9090"
+      - "9000:9000"
+    environment:
+      MINIO_ROOT_USER: "admin"
+      MINIO_ROOT_PASSWORD: "Pass1234!"
+    volumes:
+      - ./minio/data:/mnt/data
+    command: server --console-address ":9090" /mnt/data
+    restart: always
+  
   migration:
     image: hungnn2810/lifebalance-backend:migration-latest
+    container_name: migration
     depends_on:
       - postgresdb
     restart: on-failure
   
   api:
     image: hungnn2810/lifebalance-backend:latest
+    container_name: api
     ports:
       - "5001:8080"
     environment:
@@ -31,3 +48,8 @@ services:
     depends_on:
       - migration
     restart: always
+
+volumes:
+  grafana-db:
+  prometheus-db:
+  portainer-db:
