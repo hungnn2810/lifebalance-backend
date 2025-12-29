@@ -15,6 +15,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(u => u.Name).HasColumnName("name");
         builder.Property(u => u.Password).HasColumnName("password");
         builder.Property(u => u.Language).HasColumnName("language");
+        builder.Property(u => u.Role).HasColumnName("role").HasConversion<string>();
         builder.Property(u => u.CreatedAt).HasColumnName("created_at");
         builder.Property(u => u.UpdatedAt).HasColumnName("updated_at");
         builder.HasMany(u => u.UserLogins).WithOne(x => x.User).HasForeignKey(u => u.UserId);

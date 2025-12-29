@@ -16,13 +16,13 @@ services:
     restart: on-failure
   
   api:
-    image: hungnn2810/lifebalance-backend:main
+    image: hungnn2810/lifebalance-backend:latest
     ports:
       - "5001:8080"
     environment:
-      ASPNETCORE_ENVIRONMENT: "Production"
+      ASPNETCORE_ENVIRONMENT: "Development"
       AUTHENTICATION__GOOGLE__CLIENTID: "574707967522-thu8k7qupvmuk4fidncs6k42t9h7ufl7.apps.googleusercontent.com"
-      ConnectionStrings"__Default: "User ID=postgres;Password=Pass1234!;Host=localhost;Port=5433;Database=lifebalance;Pooling=true;"
+      ConnectionStrings__Default: "User ID=postgres;Password=Pass1234!;Host=postgresdb;Port=5432;Database=lifebalance;Pooling=true;"
       Jwt__Issuer: "LifeBalanceApi"
       Jwt__Audience: "LifeBalanceApiUsers"
       Jwt__Secret: "7fe33c9d239c68eadce0cc0e724d8741"
