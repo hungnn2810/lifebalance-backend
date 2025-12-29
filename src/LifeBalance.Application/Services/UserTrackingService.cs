@@ -1,6 +1,7 @@
 using LifeBalance.Application.Repositories.Abstractions;
 using LifeBalance.Application.Services.Abstractions;
 using LifeBalance.Application.SharedKernel.Abstractions;
+using LifeBalance.Application.SharedKernel.Models;
 using LifeBalance.Application.UserTracking.Commands;
 using LifeBalance.Application.UserTracking.Models;
 using LifeBalance.Application.UserTracking.Queries;
@@ -19,34 +20,37 @@ public class UserTrackingService(IUnitOfWork unitOfWork, IUserContext userContex
         return UserTrackingDto.Create(entity);
     }
 
-    public async Task<UserTrackingDto> AddOrUpdateAsync(AddOrUpdateUserTrackingCommand command)
+    public async Task<BaseResponse> AddOrUpdateAsync(AddOrUpdateUserTrackingCommand command)
     {
         await unitOfWork.BeginTransactionAsync();
         try
         {
-            // Check if record for the date range already exists
-            var checkEntity = await unitOfWork.UserTracking.AsQueryable()
-                .Where(x => command.StartDate <= x.CreatedAt && x.CreatedAt <= command.EndDate && x.UserId == userContext.Id)
-                .FirstOrDefaultAsync();
-
-            if (checkEntity != null)
+            foreach (var item in command.Items)
             {
-                checkEntity.Calories = command.Calories;
-                checkEntity.Steps = command.Steps;
-                checkEntity.WorkoutStreak = command.WorkoutStreak;
-                checkEntity.UpdatedAt = DateTime.UtcNow;
+                // Check if record for the date range already exists
+                var checkEntity = await unitOfWork.UserTracking.AsQueryable()
+                    .Where(x => item.StartDate <= x.CreatedAt && x.CreatedAt <= item.EndDate && x.UserId == userContext.Id)
+                    .FirstOrDefaultAsync();
 
-                await unitOfWork.CommitAsync();
-                return UserTrackingDto.Create(checkEntity);
+                if (checkEntity != null)
+                {
+                    checkEntity.Calories = item.Calories;
+                    checkEntity.Steps = item.Steps;
+                    checkEntity.WorkoutStreak = item.WorkoutStreak;
+                    checkEntity.UpdatedAt = DateTime.UtcNow;
+
+                    continue;
+                }
+
+                var entity = AddOrUpdateUserTrackingCommand.Create(item);
+                entity.UserId = userContext.Id;
+
+                await unitOfWork.UserTracking.AddAsync(entity);
             }
-            
-            var entity = AddOrUpdateUserTrackingCommand.Create(command);
-            entity.UserId = userContext.Id;
-            
-            var response = await unitOfWork.UserTracking.AddAsync(entity);
+
             await unitOfWork.CommitAsync();
-            
-            return UserTrackingDto.Create(response);
+
+            return BaseResponse.Success;
         }
         catch (Exception e)
         {
