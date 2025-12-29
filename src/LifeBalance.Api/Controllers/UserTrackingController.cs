@@ -19,7 +19,7 @@ public class UserTrackingController(IMediator mediator) : ControllerBase
     }
     
     [HttpPost]
-    public async Task<IActionResult> AddOrUpdateAsync([FromBody] AddOrUpdateUserTrackingCommand command)
+    public async Task<IActionResult> AddAsync([FromBody] AddUserTrackingCommand command)
     {
         var response = await mediator.Send(command);
         return Ok(response);

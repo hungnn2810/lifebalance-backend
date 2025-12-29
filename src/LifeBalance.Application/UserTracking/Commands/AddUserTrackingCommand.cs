@@ -4,20 +4,19 @@ using MediatR;
 
 namespace LifeBalance.Application.UserTracking.Commands;
 
-public class AddOrUpdateUserTrackingCommand : IRequest<BaseResponse>
+public class AddUserTrackingCommand : IRequest<BaseResponse>
 {
-    public AddOrUpdateUserTracking[] Items { get; set; }
+    public AddUserTracking[] Items { get; set; }
     
-    public class AddOrUpdateUserTracking
+    public class AddUserTracking
     {
         public int Steps { get; set; }
         public int Calories { get; set; }
         public int WorkoutStreak { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public DateTime CreatedAt { get; set; }
     }
 
-    private static Expression<Func<AddOrUpdateUserTracking, Domain.Entities.UserTracking>> Projection
+    private static Expression<Func<AddUserTracking, Domain.Entities.UserTracking>> Projection
     {
         get
         {
@@ -27,11 +26,12 @@ public class AddOrUpdateUserTrackingCommand : IRequest<BaseResponse>
                 Steps = command.Steps,
                 Calories = command.Calories,
                 WorkoutStreak = command.WorkoutStreak,
+                CreatedAt = command.CreatedAt
             };
         }
     }
 
-    public static Domain.Entities.UserTracking Create(AddOrUpdateUserTracking command)
+    public static Domain.Entities.UserTracking Create(AddUserTracking command)
     {
         return command != null ? Projection.Compile().Invoke(command) : null;
     }

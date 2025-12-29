@@ -5,10 +5,10 @@ using MediatR;
 
 namespace LifeBalance.Application.UserTracking.Commands.Handlers;
 
-public class AddUserTrackingHandler(IUserTrackingService service) : IRequestHandler<AddOrUpdateUserTrackingCommand, BaseResponse>
+public class AddUserTrackingHandler(IUserTrackingService service) : IRequestHandler<AddUserTrackingCommand, BaseResponse>
 {
-    public async Task<BaseResponse> Handle(AddOrUpdateUserTrackingCommand request, CancellationToken cancellationToken)
+    public async Task<BaseResponse> Handle(AddUserTrackingCommand request, CancellationToken cancellationToken)
     {
-        return await service.AddOrUpdateAsync(request);
+        return await service.AddAsync(request);
     }
 }

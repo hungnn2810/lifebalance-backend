@@ -20,29 +20,14 @@ public class UserTrackingService(IUnitOfWork unitOfWork, IUserContext userContex
         return UserTrackingDto.Create(entity);
     }
 
-    public async Task<BaseResponse> AddOrUpdateAsync(AddOrUpdateUserTrackingCommand command)
+    public async Task<BaseResponse> AddAsync(AddUserTrackingCommand command)
     {
         await unitOfWork.BeginTransactionAsync();
         try
         {
             foreach (var item in command.Items)
             {
-                // Check if record for the date range already exists
-                var checkEntity = await unitOfWork.UserTracking.AsQueryable()
-                    .Where(x => item.StartDate <= x.CreatedAt && x.CreatedAt <= item.EndDate && x.UserId == userContext.Id)
-                    .FirstOrDefaultAsync();
-
-                if (checkEntity != null)
-                {
-                    checkEntity.Calories = item.Calories;
-                    checkEntity.Steps = item.Steps;
-                    checkEntity.WorkoutStreak = item.WorkoutStreak;
-                    checkEntity.UpdatedAt = DateTime.UtcNow;
-
-                    continue;
-                }
-
-                var entity = AddOrUpdateUserTrackingCommand.Create(item);
+                var entity = AddUserTrackingCommand.Create(item);
                 entity.UserId = userContext.Id;
 
                 await unitOfWork.UserTracking.AddAsync(entity);
@@ -52,7 +37,7 @@ public class UserTrackingService(IUnitOfWork unitOfWork, IUserContext userContex
 
             return BaseResponse.Success;
         }
-        catch (Exception e)
+        catch (Exception)
         {
             await unitOfWork.RollbackAsync();
             throw;

@@ -4,9 +4,9 @@ using LifeBalance.Application.UserTracking.Commands;
 
 namespace LifeBalance.Application.UserTracking.Validations;
 
-public class AddOrUpdateUserTrackingValidation : AbstractValidator<AddOrUpdateUserTrackingCommand>
+public class AddUserTrackingValidation : AbstractValidator<AddUserTrackingCommand>
 {
-    public AddOrUpdateUserTrackingValidation()
+    public AddUserTrackingValidation()
     {
         RuleFor(x => x.Items)
             .NotNull()
@@ -18,7 +18,7 @@ public class AddOrUpdateUserTrackingValidation : AbstractValidator<AddOrUpdateUs
     }
 }
 
-public class AddOrUpdateUserTrackingItemValidator : AbstractValidator<AddOrUpdateUserTrackingCommand.AddOrUpdateUserTracking>
+public class AddOrUpdateUserTrackingItemValidator : AbstractValidator<AddUserTrackingCommand.AddUserTracking>
 {
     public AddOrUpdateUserTrackingItemValidator()
     {
@@ -32,10 +32,6 @@ public class AddOrUpdateUserTrackingItemValidator : AbstractValidator<AddOrUpdat
 
         RuleFor(x => x.WorkoutStreak)
             .GreaterThanOrEqualTo(0)
-            .WithMessage(ExceptionErrorCode.DetailCode.ERROR_VALIDATION_INVALID);
-
-        RuleFor(x => x.StartDate)
-            .LessThanOrEqualTo(x => x.EndDate)
             .WithMessage(ExceptionErrorCode.DetailCode.ERROR_VALIDATION_INVALID);
     }
 }

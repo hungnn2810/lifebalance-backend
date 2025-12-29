@@ -8,5 +8,5 @@ namespace LifeBalance.Application.Services.Abstractions;
 public interface IUserTrackingService
 {
     Task<UserTrackingDto> FindAsync(GetUserTrackingQuery query);
-    Task<BaseResponse> AddOrUpdateAsync(AddOrUpdateUserTrackingCommand command);
+    Task<BaseResponse> AddAsync(AddUserTrackingCommand command);
 }
