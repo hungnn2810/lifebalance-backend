@@ -10,7 +10,8 @@ public class UnitOfWork(
     IUserRepository users,
     IUserLoginRepository userLogins,
     IUserInformationRepository userInfo,
-    IUserTrackingRepository userTracking
+    IUserTrackingRepository userTracking,
+    IWorkoutRepository workouts
 ) : IUnitOfWork
 {
     private AppDbContext Context { get; set; } = context;
@@ -45,4 +46,5 @@ public class UnitOfWork(
     public IUserLoginRepository UserLogins { get; private set; } = userLogins;
     public IUserInformationRepository UserInformation { get; private set; } = userInfo;
     public IUserTrackingRepository UserTracking { get; private set; } = userTracking;
+    public IWorkoutRepository Workouts { get; private set; } = workouts;
 }

@@ -11,4 +11,5 @@ public interface IUnitOfWork
     IUserLoginRepository UserLogins { get; }
     IUserInformationRepository UserInformation { get; }
     IUserTrackingRepository UserTracking { get; }
+    IWorkoutRepository Workouts { get; }
 }

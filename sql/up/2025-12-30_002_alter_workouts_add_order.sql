@@ -1,0 +1,1 @@
+ALTER TABLE workouts ADD order INT NOT NULL DEFAULT 0;

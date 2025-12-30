@@ -1,4 +1,5 @@
 using LifeBalance.Application.Workouts.Commands;
+using LifeBalance.Application.Workouts.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -15,6 +16,13 @@ public class WorkoutController(IMediator mediator) : ControllerBase
     public async Task<IActionResult> AddAsync([FromBody] AddWorkoutCommand command)
     {
         var response = await mediator.Send(command);
+        return Ok(response);
+    }
+
+    [HttpPost("search")]
+    public async Task<IActionResult> SearchAsync([FromBody] SearchWorkoutQuery query)
+    {
+        var response = await mediator.Send(query);
         return Ok(response);
     }
 }

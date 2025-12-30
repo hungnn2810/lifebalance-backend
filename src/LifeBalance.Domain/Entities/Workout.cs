@@ -13,15 +13,9 @@ public class Workout : IEntity<Guid>
     [StringLength(1024)] public string Notes { get; set; }
     [StringLength(1024)] public string[] Benefits { get; set; }
     public int EstimatedCalories { get; set; }
+    public int Order { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
-    
-    [NotMapped]
-    public WorkoutBenefit[] BenefitsEnums
-    {
-        get => Benefits.Select(Enum.Parse<WorkoutBenefit>).ToArray();
-        set => Benefits = value.Select(x => x.ToString()).ToArray();
-    }
     
     public ICollection<WorkoutStep> Steps { get; set; }
 }

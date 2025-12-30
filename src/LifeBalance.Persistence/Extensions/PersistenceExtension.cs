@@ -26,6 +26,7 @@ public static class PersistenceExtension
         serviceCollection.AddScoped<IUserLoginRepository, UserLoginRepository>();
         serviceCollection.AddScoped<IUserInformationRepository, UserInformationRepository>();
         serviceCollection.AddScoped<IUserTrackingRepository, UserTrackingRepository>();
+        serviceCollection.AddScoped<IWorkoutRepository, WorkoutRepository>();
         serviceCollection.AddScoped<IUnitOfWork, UnitOfWork>();
     }
 }

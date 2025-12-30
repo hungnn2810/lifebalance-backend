@@ -13,7 +13,7 @@ public class AddWorkoutCommand : IRequest<BaseResponse>
     public string Title { get; set; }
     public WorkoutType Type { get; set; }
     public string Notes { get; set; }
-    public WorkoutBenefit[] Benefits { get; set; }
+    public string[] Benefits { get; set; }
     public int EstimatedCalories { get; set; }
     public WorkoutStepDto[] Steps { get; set; }
 
@@ -27,7 +27,7 @@ public class AddWorkoutCommand : IRequest<BaseResponse>
                 Title = command.Title,
                 Type = command.Type,
                 Notes = command.Notes,
-                BenefitsEnums = command.Benefits,
+                Benefits = command.Benefits,
                 EstimatedCalories = command.EstimatedCalories,
                 Steps = command.Steps.Select(stepDto => new WorkoutStep
                 {
