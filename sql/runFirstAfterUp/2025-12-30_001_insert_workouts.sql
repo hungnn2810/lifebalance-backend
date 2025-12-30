@@ -50,7 +50,7 @@ INSERT INTO workout_steps (
     id,
     workout_id,
     title,
-    step_order,
+    "index",
     description
 ) VALUES (
     'a557f1a9-6823-4499-a170-4817c465711e',
