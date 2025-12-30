@@ -5,7 +5,7 @@ INSERT INTO workouts (id,
     notes,
     benefits,
     estimated_calories,
-    order
+    "index"
 ) VALUES (
      '202126a3-f7f9-4468-b3ab-ec6e16a20c14',
      'Leg & Glute Workout',
@@ -28,7 +28,7 @@ INSERT INTO workout_steps (
     id,
     workout_id,
     title,
-    step_order,
+    "index",
     description
 ) VALUES (
      '01e423f6-dd98-4cf7-9dc7-597f15907744',
