@@ -1,5 +1,6 @@
 using System.Linq.Expressions;
 using LifeBalance.Application.SharedKernel.Models;
+using LifeBalance.Application.Workouts.Models;
 using LifeBalance.Domain.Entities;
 using LifeBalance.Domain.Enums;
 using MediatR;
@@ -14,6 +15,7 @@ public class AddWorkoutCommand : IRequest<BaseResponse>
     public string Notes { get; set; }
     public WorkoutBenefit[] Benefits { get; set; }
     public int EstimatedCalories { get; set; }
+    public WorkoutStepDto[] Steps { get; set; }
 
     private static Expression<Func<AddWorkoutCommand, Workout>> Projection
     {
@@ -27,6 +29,19 @@ public class AddWorkoutCommand : IRequest<BaseResponse>
                 Notes = command.Notes,
                 BenefitsEnums = command.Benefits,
                 EstimatedCalories = command.EstimatedCalories,
+                Steps = command.Steps.Select(stepDto => new WorkoutStep
+                {
+                    Title = stepDto.Title,
+                    StepOrder = stepDto.StepOrder,
+                    Description = stepDto.Description,
+                    Medias = stepDto.Medias.Select(mediaDto => new WorkoutStepMedia
+                    {
+                        MediaType = mediaDto.MediaType,
+                        ObjectKey = mediaDto.ObjectKey,
+                        Url = mediaDto.Url,
+                        SortOrder = mediaDto.SortOrder
+                    }).ToList()
+                }).ToList()
             };
         }
     }

@@ -20,12 +20,17 @@ public class AddUserInfoValidation : AbstractValidator<AddUserInfoCommand>
 
         RuleFor(x => x.Weight)
             .NotNull()
-            .NotNull()
+            .NotEmpty()
             .WithMessage(ExceptionErrorCode.DetailCode.ERROR_VALIDATION_REQUIRED);
 
         RuleFor(x => x.Height)
             .NotNull()
+            .NotEmpty()
+            .WithMessage(ExceptionErrorCode.DetailCode.ERROR_VALIDATION_REQUIRED);
+        
+        RuleFor(x => x.Gender)
             .NotNull()
+            .NotEmpty()
             .WithMessage(ExceptionErrorCode.DetailCode.ERROR_VALIDATION_REQUIRED);
 
         RuleFor(x => x.FitnessGoals)

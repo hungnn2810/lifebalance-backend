@@ -11,6 +11,7 @@ public class UserInfoDto
     public short Age { get; set; }
     public short Weight { get; set; }
     public short Height { get; set; }
+    public Gender Gender { get; set; }
     public FitnessGoal[] FitnessGoals { get; set; }
     public DateTime UpdatedAt { get; set; }
     
@@ -25,6 +26,7 @@ public class UserInfoDto
                 Age = entity.Age,
                 Weight = entity.Weight,
                 Height = entity.Height,
+                Gender = entity.Gender,
                 FitnessGoals = entity.FitnessGoalEnums,
                 UpdatedAt = entity.UpdatedAt
             };

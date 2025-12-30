@@ -10,9 +10,10 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<UserLogin> UserLogins { get; set; }
     public DbSet<UserInformation> UserInformation { get; set; }
     public DbSet<UserTracking> UserTracking { get; set; }
+    public DbSet<RefreshToken> RefreshTokens { get; set; }
     public DbSet<Workout> Workouts { get; set; }
     public DbSet<WorkoutStep> WorkoutSteps { get; set; }
-    public DbSet<RefreshToken> RefreshTokens { get; set; }
+    public DbSet<WorkoutStepMedia> WorkoutStepMedias { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -20,8 +21,9 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         modelBuilder.ApplyConfiguration(new UserLoginConfiguration());
         modelBuilder.ApplyConfiguration(new UserInformationConfiguration());
         modelBuilder.ApplyConfiguration(new UserTrackingConfiguration());
+        modelBuilder.ApplyConfiguration(new RefreshTokenConfiguration());
         modelBuilder.ApplyConfiguration(new WorkoutConfiguration());
         modelBuilder.ApplyConfiguration(new WorkoutStepConfiguration());
-        modelBuilder.ApplyConfiguration(new RefreshTokenConfiguration());
+        modelBuilder.ApplyConfiguration(new WorkoutStepMediaConfiguration());
     }
 }

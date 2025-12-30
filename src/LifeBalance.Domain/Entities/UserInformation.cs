@@ -11,6 +11,7 @@ public class UserInformation : IEntity<Guid>
     public short Age { get; set; }
     public short Weight { get; set; }
     public short Height { get; set; }
+    public Gender Gender { get; set; }
     [StringLength(64)] public string[] FitnessGoals { get; set; } = [];
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;

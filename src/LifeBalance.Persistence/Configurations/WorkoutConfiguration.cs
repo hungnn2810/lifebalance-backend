@@ -19,5 +19,6 @@ public class WorkoutConfiguration : IEntityTypeConfiguration<Workout>
         builder.Property(w => w.EstimatedCalories).HasColumnName("estimated_calories");
         builder.Property(w => w.CreatedAt).HasColumnName("created_at");
         builder.Property(w => w.UpdatedAt).HasColumnName("updated_at");
+        builder.HasMany(w => w.Steps).WithOne(w => w.Workout).HasForeignKey(ws => ws.WorkoutId);
     }
 }

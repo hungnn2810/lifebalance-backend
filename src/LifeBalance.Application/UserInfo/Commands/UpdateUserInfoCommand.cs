@@ -11,6 +11,7 @@ public class UpdateUserInfoCommand : IRequest<BaseResponse>
     public short Age { get; set; }
     public short Height { get; set; }
     public short Weight { get; set; }
+    public Gender Gender { get; set; }
     public FitnessGoal[] FitnessGoals { get; set; }
 
     private static Expression<Func<UpdateUserInfoCommand, Domain.Entities.UserInformation>> Projection
@@ -23,6 +24,7 @@ public class UpdateUserInfoCommand : IRequest<BaseResponse>
                 Age = command.Age,
                 Height = command.Height,
                 Weight = command.Weight,
+                Gender =  command.Gender,
                 FitnessGoalEnums = command.FitnessGoals
             };
         }

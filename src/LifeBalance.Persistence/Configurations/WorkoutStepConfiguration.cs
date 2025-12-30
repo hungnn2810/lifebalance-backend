@@ -15,9 +15,8 @@ public class WorkoutStepConfiguration : IEntityTypeConfiguration<WorkoutStep>
         builder.Property(ws => ws.Title).HasColumnName("title");
         builder.Property(ws => ws.StepOrder).HasColumnName("step_order");
         builder.Property(ws => ws.Description).HasColumnName("description");
-        builder.Property(ws => ws.Image).HasColumnName("image");
-        builder.Property(ws => ws.Video).HasColumnName("video");
         builder.Property(ws => ws.CreatedAt).HasColumnName("created_at");
         builder.Property(ws => ws.UpdatedAt).HasColumnName("updated_at");
+        builder.HasMany(ws => ws.Medias).WithOne(m => m.WorkoutStep).HasForeignKey(m => m.WorkoutStepId);
     }
 }

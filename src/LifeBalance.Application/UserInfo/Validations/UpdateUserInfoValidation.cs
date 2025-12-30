@@ -15,17 +15,22 @@ public class UpdateUserInfoValidation : AbstractValidator<UpdateUserInfoCommand>
 
         RuleFor(x => x.Age)
             .NotNull()
-            .NotNull()
+            .NotEmpty()
             .WithMessage(ExceptionErrorCode.DetailCode.ERROR_VALIDATION_REQUIRED);
 
         RuleFor(x => x.Weight)
             .NotNull()
-            .NotNull()
+            .NotEmpty()
             .WithMessage(ExceptionErrorCode.DetailCode.ERROR_VALIDATION_REQUIRED);
 
         RuleFor(x => x.Height)
             .NotNull()
+            .NotEmpty()
+            .WithMessage(ExceptionErrorCode.DetailCode.ERROR_VALIDATION_REQUIRED);
+        
+        RuleFor(x => x.Gender)
             .NotNull()
+            .NotEmpty()
             .WithMessage(ExceptionErrorCode.DetailCode.ERROR_VALIDATION_REQUIRED);
 
         RuleFor(x => x.FitnessGoals)

@@ -3,4 +3,4 @@ using MediatR;
 
 namespace LifeBalance.Application.UserInfo.Queries;
 
-public class GetUserInfoQuery() : IRequest<UserInfoDto>;
+public class GetUserInfoQuery : IRequest<UserInfoDto>;

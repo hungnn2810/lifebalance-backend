@@ -22,4 +22,6 @@ public class Workout : IEntity<Guid>
         get => Benefits.Select(Enum.Parse<WorkoutBenefit>).ToArray();
         set => Benefits = value.Select(x => x.ToString()).ToArray();
     }
+    
+    public ICollection<WorkoutStep> Steps { get; set; }
 }
