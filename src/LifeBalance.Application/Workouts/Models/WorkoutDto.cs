@@ -7,6 +7,7 @@ namespace LifeBalance.Application.Workouts.Models;
 public class WorkoutDto
 {
     public Guid Id { get; set; }
+    public string Code { get; set; }
     public string Name { get; set; }
     public string Title { get; set; }
     public WorkoutType Type { get; set; }
@@ -23,6 +24,7 @@ public class WorkoutDto
             return entity => new WorkoutDto
             {
                 Id = entity.Id,
+                Code = entity.Code,
                 Name = entity.Name,
                 Title = entity.Title,
                 Type = entity.Type,

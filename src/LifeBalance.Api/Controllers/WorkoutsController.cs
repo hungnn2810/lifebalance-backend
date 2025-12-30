@@ -9,7 +9,7 @@ namespace LifeBalance.Api.Controllers;
 [Authorize]
 [ApiController]
 [Route("[controller]")]
-public class WorkoutController(IMediator mediator) : ControllerBase
+public class WorkoutsController(IMediator mediator) : ControllerBase
 {
     [HttpPost]
     [Authorize(Roles = "ADMIN")]

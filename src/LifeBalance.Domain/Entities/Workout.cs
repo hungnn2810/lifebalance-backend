@@ -7,6 +7,7 @@ namespace LifeBalance.Domain.Entities;
 public class Workout : IEntity<Guid>
 {
     public Guid Id { get; set; }
+    [StringLength(128)] public string Code { get; set; }
     [StringLength(128)] public string Name { get; set; }
     [StringLength(256)] public string Title { get; set; }
     [StringLength(128)] public WorkoutType Type { get; set; }
@@ -16,6 +17,6 @@ public class Workout : IEntity<Guid>
     public int Index { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
-    
+
     public ICollection<WorkoutStep> Steps { get; set; }
 }

@@ -1,4 +1,6 @@
-INSERT INTO workouts (id,
+INSERT INTO workouts (
+    id,
+    code,
     name,
     title,
     type,
@@ -8,6 +10,7 @@ INSERT INTO workouts (id,
     "index"
 ) VALUES (
      '202126a3-f7f9-4468-b3ab-ec6e16a20c14',
+     'GYM001',
      'Leg & Glute Workout',
      'Lower Body – Squat Focus',
      'Gym',

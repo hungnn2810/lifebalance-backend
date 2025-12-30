@@ -8,10 +8,11 @@ using LifeBalance.Application.Workouts.Models;
 using LifeBalance.Application.Workouts.Queries;
 using LifeBalance.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace LifeBalance.Application.Services;
 
-public class WorkoutService(IUnitOfWork unitOfWork) : IWorkoutService
+public class WorkoutService(IUnitOfWork unitOfWork, IServiceScopeFactory serviceScopeFactory) : IWorkoutService
 {
     public async Task<BaseResponse> AddAsync(AddWorkoutCommand command)
     {
@@ -64,9 +65,12 @@ public class WorkoutService(IUnitOfWork unitOfWork) : IWorkoutService
 
     private async Task RetrieveDataAsync(SearchWorkoutQuery criteria, BaseSearchResponse<WorkoutDto> result)
     {
-        var query = BuildCriteria(criteria);
+        using var scope = serviceScopeFactory.CreateScope();
+        var repository = scope.ServiceProvider.GetRequiredService<IWorkoutRepository>();
+        var query = BuildCriteria(criteria, repository);
 
         var listResult = await query
+            .OrderBy(x => x.Index)
             .Skip(criteria.PageIndex * criteria.PageSize)
             .Take(criteria.PageSize)
             .AsNoTracking()
@@ -80,15 +84,17 @@ public class WorkoutService(IUnitOfWork unitOfWork) : IWorkoutService
 
     private async Task CountAsync(SearchWorkoutQuery criteria, BaseSearchResponse<WorkoutDto> result)
     {
-        var query = BuildCriteria(criteria);
+        using var scope = serviceScopeFactory.CreateScope();
+        var repository = scope.ServiceProvider.GetRequiredService<IWorkoutRepository>();
+        var query = BuildCriteria(criteria, repository);
 
         var count = await query.CountAsync();
         result.TotalCount = count;
     }
-    
-    private IQueryable<Workout> BuildCriteria(SearchWorkoutQuery criteria)
+
+    private static IQueryable<Workout> BuildCriteria(SearchWorkoutQuery criteria, IWorkoutRepository repository)
     {
-        var query = unitOfWork.Workouts.AsQueryable();
+        var query = repository.AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(criteria.Keyword))
         {

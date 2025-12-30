@@ -11,6 +11,7 @@ public class WorkoutConfiguration : IEntityTypeConfiguration<Workout>
         builder.ToTable("workouts");
         builder.HasKey(w => w.Id);
         builder.Property(w => w.Id).HasColumnName("id");
+        builder.Property(w => w.Code).HasColumnName("code");
         builder.Property(w => w.Name).HasColumnName("name");
         builder.Property(w => w.Title).HasColumnName("title");
         builder.Property(w => w.Type).HasColumnName("type").HasConversion<string>();
