@@ -13,7 +13,7 @@ public class WorkoutDto
     public string Notes { get; set; }
     public string[] Benefits { get; set; }
     public int EstimatedCalories { get; set; }
-    public int Order { get; set; }
+    public int Index { get; set; }
     public WorkoutStepDto[] Steps { get; set; }
 
     private static Expression<Func<Workout, WorkoutDto>> Projection
@@ -29,9 +29,9 @@ public class WorkoutDto
                 Notes = entity.Notes,
                 Benefits = entity.Benefits,
                 EstimatedCalories = entity.EstimatedCalories,
-                Order = entity.Order,
+                Index = entity.Index,
                 Steps = entity.Steps != null && entity.Steps.Count > 0
-                    ? entity.Steps.OrderBy(x => x.StepOrder).Select(WorkoutStepDto.Create).ToArray()
+                    ? entity.Steps.OrderBy(x => x.Index).Select(WorkoutStepDto.Create).ToArray()
                     : Array.Empty<WorkoutStepDto>()
             };
         }

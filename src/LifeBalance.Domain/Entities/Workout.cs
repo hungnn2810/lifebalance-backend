@@ -13,7 +13,7 @@ public class Workout : IEntity<Guid>
     [StringLength(1024)] public string Notes { get; set; }
     [StringLength(1024)] public string[] Benefits { get; set; }
     public int EstimatedCalories { get; set; }
-    public int Order { get; set; }
+    public int Index { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
     

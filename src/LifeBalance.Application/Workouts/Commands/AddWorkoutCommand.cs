@@ -32,7 +32,7 @@ public class AddWorkoutCommand : IRequest<BaseResponse>
                 Steps = command.Steps.Select(stepDto => new WorkoutStep
                 {
                     Title = stepDto.Title,
-                    StepOrder = stepDto.StepOrder,
+                    Index = stepDto.Index,
                     Description = stepDto.Description,
                     Medias = stepDto.Medias.Select(mediaDto => new WorkoutStepMedia
                     {
