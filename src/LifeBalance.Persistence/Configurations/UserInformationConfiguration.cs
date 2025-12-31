@@ -1,5 +1,4 @@
 using LifeBalance.Domain.Entities;
-using LifeBalance.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

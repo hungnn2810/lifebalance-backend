@@ -1,6 +1,5 @@
 using LifeBalance.Application.Services.Abstractions;
 using LifeBalance.Application.SharedKernel.Models;
-using LifeBalance.Application.UserTracking.Models;
 using MediatR;
 
 namespace LifeBalance.Application.UserTracking.Commands.Handlers;

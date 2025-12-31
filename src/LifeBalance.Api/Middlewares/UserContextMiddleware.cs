@@ -1,4 +1,3 @@
-using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using LifeBalance.Application.SharedKernel.Abstractions;
 using Microsoft.AspNetCore.Authentication;
@@ -22,7 +21,7 @@ public class UserContextMiddleware(RequestDelegate next)
             return;
         }
         
-        var language = context.User.FindFirst("language")?.Value ?? "en";
+        var language = context.User.FindFirst("lang")?.Value ?? "en";
         
         if (context.RequestServices.GetService(typeof(IUserContext)) is IUserContext userContext)
         {

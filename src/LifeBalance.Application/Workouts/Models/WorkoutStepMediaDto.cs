@@ -1,6 +1,3 @@
-
-using System.Linq.Expressions;
-using LifeBalance.Domain.Entities;
 using LifeBalance.Domain.Enums;
 
 namespace LifeBalance.Application.Workouts.Models;

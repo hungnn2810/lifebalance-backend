@@ -1,4 +1,4 @@
-using System.Linq.Expressions;
+using LifeBalance.Application.Services.Abstractions;
 using LifeBalance.Domain.Entities;
 using LifeBalance.Domain.Enums;
 
@@ -43,4 +43,32 @@ public class WorkoutDto
     // {
     //     return entity != null ? Projection.Compile().Invoke(entity) : null;
     // }
+    
+    public static WorkoutDto Create(Workout entity, IWorkoutLocalizationService localizer)
+    {
+        var locale = localizer.Get(entity.Code);
+
+        return new WorkoutDto
+        {
+            Id = entity.Id,
+            Code = entity.Code,
+            Name = locale?.Name ?? entity.Code,
+            Title = locale?.Title,
+            Notes = locale?.Notes,
+            Benefits = locale?.Benefits ?? Array.Empty<string>(),
+            Type = entity.Type,
+            EstimatedCalories = entity.EstimatedCalories,
+            Index = entity.Index,
+            Steps = entity.Steps?
+                .OrderBy(x => x.Index)
+                .Select((step, i) => new WorkoutStepDto
+                {
+                    Index = step.Index,
+                    Title = locale?.Steps?.ElementAtOrDefault(i)?.Title,
+                    Description = locale?.Steps?.ElementAtOrDefault(i)?.Description
+                })
+                .ToArray()
+        };
+    }
+
 }

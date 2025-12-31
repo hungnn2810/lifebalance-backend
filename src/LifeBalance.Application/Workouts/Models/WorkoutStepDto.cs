@@ -1,6 +1,3 @@
-using System.Linq.Expressions;
-using LifeBalance.Domain.Entities;
-
 namespace LifeBalance.Application.Workouts.Models;
 
 public class WorkoutStepDto

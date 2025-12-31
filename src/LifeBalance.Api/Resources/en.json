@@ -1,0 +1,25 @@
+{
+  "Workout": {
+    "GYM1": {
+      "Name": "Leg & Glute Workout",
+      "Title": "Lower Body – Squat Focus",
+      "Notes": "Tempo 3-1-1 = 3 seconds down – 1 second pause – 1 second up.\nRPE 7–9 for hypertrophy (1–3 reps in reserve).\nBrace your core as if preparing to be punched to protect your spine.",
+      "Benefits": [
+        "Build lower-body strength",
+        "Develop glutes and quads",
+        "Improve core stability",
+        "Increase calorie burn"
+      ],
+      "Steps": [
+        {
+          "Title": "Standard Warm-up (7–10 minutes)",
+          "Description": "3–5 minutes: incline walking or light cycling to raise body temperature.\n\n2–3 minutes:\n- Glute bridge: 2 × 12 reps\n- Bodyweight squat: 2 × 10 reps\n\nRamp-up sets for the main lift:\n- 1 very light set × 10–12 reps\n- 1 moderate set × 5–6 reps"
+        },
+        {
+          "Title": "Squat (Goblet / Back Squat)",
+          "Description": "Target muscles: quadriceps, glutes, core.\n\nSetup:\n- Feet shoulder-width or slightly wider, toes turned out 15–30°\n- Weight balanced over mid-foot\n- Neutral spine, chest open, eyes forward\n\nExecution:\n- Inhale deeply and brace your core\n- Descend by pushing hips back while knees track over toes\n- Lower until you can maintain a neutral spine (thighs parallel is a common reference)\n- Drive up by pushing the floor away, keeping knees aligned\n\nCoaching cues:\n- \"Sit down as if onto a chair\"\n- \"Ribs down, core tight\"\n- \"Knees gently out\"\n\nBreathing:\n- Inhale at the top\n- Maintain brace during the descent and hardest point\n- Exhale near full extension\n\nRecommended sets & reps:\n- Hypertrophy: 3–5 sets × 6–12 reps (RPE 7–9)\n- Strength: 4–6 sets × 3–6 reps"
+        }
+      ]
+    }
+  }
+}

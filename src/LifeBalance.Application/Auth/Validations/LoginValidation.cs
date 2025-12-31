@@ -1,7 +1,6 @@
 using FluentValidation;
 using LifeBalance.Application.Auth.Commands;
 using LifeBalance.Application.Exceptions;
-using LifeBalance.Application.SharedKernel.Models;
 
 namespace LifeBalance.Application.Auth.Validations;
 

@@ -1,53 +1,39 @@
-using System.Globalization;
-using System.Reflection;
+using LifeBalance.Application.Constants;
 using LifeBalance.Application.Services.Abstractions;
 using LifeBalance.Application.SharedKernel.Abstractions;
 using LifeBalance.Application.Workouts.Models;
-using LifeBalance.Domain.Entities;
-using Microsoft.Extensions.Localization;
+using Microsoft.AspNetCore.Hosting;
+using Newtonsoft.Json;
 
 namespace LifeBalance.Application.Services;
 
 public class WorkoutLocalizationService : IWorkoutLocalizationService
 {
-    private readonly IStringLocalizer _localizer;
+    private readonly Dictionary<string, WorkoutLocale> _workouts;
 
-    public WorkoutLocalizationService(IStringLocalizerFactory factory, IUserContext userContext)
+    public WorkoutLocalizationService(IUserContext userContext, IWebHostEnvironment env)
     {
-        var culture = new CultureInfo(userContext.Language ?? "en");
-        CultureInfo.CurrentUICulture = culture;
+        var lang = string.IsNullOrWhiteSpace(userContext.Language) ? "en" : userContext.Language;
+        var path = Path.Combine(env.ContentRootPath, "Resources", $"{lang}.json");
 
-        var location = Assembly.GetExecutingAssembly().GetName().Name;
-        if (location != null) _localizer = factory.Create("Workouts", location);
+        if (!File.Exists(path))
+        {
+            throw new FileNotFoundException($"Localization file not found: {path}");
+        }
+
+        var json = File.ReadAllText(path);
+        var root = JsonConvert.DeserializeObject<JsonRoot>(json, AppConstants.JsonSerializerSetting);
+
+        _workouts = root.Workout;
     }
 
-    public WorkoutDto Localize(Workout workout)
+    public WorkoutLocale Get(string code)
     {
-        var code = workout.Code;
+        return _workouts.GetValueOrDefault(code);
+    }
 
-        return new WorkoutDto
-        {
-            Id = workout.Id,
-            Code = code,
-            Type = workout.Type,
-            EstimatedCalories = workout.EstimatedCalories,
-            Index = workout.Index,
-            Name = _localizer[$"Workout.{code}.Name"],
-            Title = _localizer[$"Workout.{code}.Title"],
-            Notes = _localizer[$"Workout.{code}.Notes"],
-            Benefits = _localizer[$"Workout.{code}.Benefits"]
-                .Value.Split('|', StringSplitOptions.RemoveEmptyEntries),
-
-            Steps = workout.Steps?
-                    .OrderBy(x => x.Index)
-                    .Select(step => new WorkoutStepDto
-                    {
-                        Index = step.Index,
-                        Title = _localizer[$"Workout.{code}.Step.{step.Code}.Title"],
-                        Description = _localizer[$"Workout.{code}.Step.{step.Code}.Description"]
-                    })
-                    .ToArray()
-                ?? []
-        };
+    private class JsonRoot
+    {
+        public Dictionary<string, WorkoutLocale> Workout { get; set; }
     }
 }

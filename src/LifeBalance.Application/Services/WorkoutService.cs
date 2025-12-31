@@ -12,7 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace LifeBalance.Application.Services;
 
-public class WorkoutService(IUnitOfWork unitOfWork, IServiceScopeFactory serviceScopeFactory) : IWorkoutService
+public class WorkoutService(IUnitOfWork unitOfWork, IServiceScopeFactory serviceScopeFactory, IWorkoutLocalizationService localizer) : IWorkoutService
 {
     public async Task<BaseResponse> AddAsync(AddWorkoutCommand command)
     {
@@ -67,7 +67,6 @@ public class WorkoutService(IUnitOfWork unitOfWork, IServiceScopeFactory service
     {
         using var scope = serviceScopeFactory.CreateScope();
         var repository = scope.ServiceProvider.GetRequiredService<IWorkoutRepository>();
-        var localizer = scope.ServiceProvider.GetRequiredService<IWorkoutLocalizationService>();
         
         var query = BuildCriteria(criteria, repository);
 
@@ -81,7 +80,7 @@ public class WorkoutService(IUnitOfWork unitOfWork, IServiceScopeFactory service
 
         if (listResult.Count != 0)
         {
-            result.AddRangeData(listResult.Select(localizer.Localize));
+            result.AddRangeData(listResult.Select(x => WorkoutDto.Create(x, localizer)));
         }
     }
 

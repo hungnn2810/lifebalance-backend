@@ -1,0 +1,25 @@
+{
+  "Workout": {
+    "GYM1": {
+      "Name": "Bài tập Chân & Mông",
+      "Title": "Thân Dưới – Trọng Tâm Squat",
+      "Notes": "Tempo 3-1-1 = 3 giây hạ xuống – 1 giây giữ – 1 giây đứng lên.\nRPE 7–9 cho mục tiêu tăng cơ (còn dư 1–3 reps).\nSiết chặt core như thể chuẩn bị bị đấm để bảo vệ cột sống.",
+      "Benefits": [
+        "Tăng sức mạnh thân dưới",
+        "Phát triển cơ mông và đùi trước",
+        "Cải thiện độ ổn định của core",
+        "Tăng mức tiêu hao calo"
+      ],
+      "Steps": [
+        {
+          "Title": "Khởi động tiêu chuẩn (7–10 phút)",
+          "Description": "3–5 phút: đi bộ dốc hoặc đạp xe nhẹ để làm nóng cơ thể.\n\n2–3 phút:\n- Glute bridge: 2 × 12 reps\n- Squat không tạ: 2 × 10 reps\n\nSet làm nóng cho bài chính:\n- 1 set rất nhẹ × 10–12 reps\n- 1 set trung bình × 5–6 reps"
+        },
+        {
+          "Title": "Squat (Goblet / Back Squat)",
+          "Description": "Nhóm cơ tác động: đùi trước, mông, core.\n\nTư thế chuẩn bị:\n- Hai chân rộng bằng vai hoặc hơn một chút, mũi chân xoay ra 15–30°\n- Trọng lượng dồn đều lên giữa bàn chân\n- Lưng trung lập, ngực mở, mắt nhìn thẳng\n\nThực hiện:\n- Hít sâu và siết chặt core\n- Hạ người bằng cách đẩy hông ra sau, đầu gối hướng theo mũi chân\n- Hạ đến mức vẫn giữ được lưng trung lập (đùi song song sàn là mốc tham khảo)\n- Đẩy sàn để đứng lên, giữ đầu gối thẳng hàng\n\nCue huấn luyện:\n- \"Ngồi xuống như ngồi ghế\"\n- \"Ép xương sườn xuống, siết core\"\n- \"Đẩy nhẹ đầu gối ra ngoài\"\n\nHô hấp:\n- Hít vào ở vị trí trên cùng\n- Giữ hơi trong lúc hạ và điểm khó nhất\n- Thở ra gần khi đứng thẳng hoàn toàn\n\nSố hiệp & số lần lặp khuyến nghị:\n- Tăng cơ: 3–5 hiệp × 6–12 reps (RPE 7–9)\n- Sức mạnh: 4–6 hiệp × 3–6 reps"
+        }
+      ]
+    }
+  }
+}

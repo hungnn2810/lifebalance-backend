@@ -24,6 +24,13 @@ services:
     command: server --console-address ":9090" /mnt/data
     restart: always
   
+  redis:
+    image: redis:6.2.6-alpine
+    ports:
+      - "6379:6379"
+    command: redis-server --requirepass Pass1234!
+    restart: always
+  
   migration:
     image: hungnn2810/lifebalance-backend:migration-latest
     container_name: migration
