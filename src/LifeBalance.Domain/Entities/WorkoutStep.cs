@@ -5,6 +5,7 @@ namespace LifeBalance.Domain.Entities;
 public class WorkoutStep : IEntity<Guid>
 {
     public Guid Id { get; set; }
+    [StringLength(128)] public string Code { get; set; }
     public Guid WorkoutId { get; set; }
     [StringLength(256)] public string Title { get; set; }
     public short Index { get; set; }

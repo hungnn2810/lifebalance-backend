@@ -17,30 +17,30 @@ public class WorkoutDto
     public int Index { get; set; }
     public WorkoutStepDto[] Steps { get; set; }
 
-    private static Expression<Func<Workout, WorkoutDto>> Projection
-    {
-        get
-        {
-            return entity => new WorkoutDto
-            {
-                Id = entity.Id,
-                Code = entity.Code,
-                Name = entity.Name,
-                Title = entity.Title,
-                Type = entity.Type,
-                Notes = entity.Notes,
-                Benefits = entity.Benefits,
-                EstimatedCalories = entity.EstimatedCalories,
-                Index = entity.Index,
-                Steps = entity.Steps != null && entity.Steps.Count > 0
-                    ? entity.Steps.OrderBy(x => x.Index).Select(WorkoutStepDto.Create).ToArray()
-                    : Array.Empty<WorkoutStepDto>()
-            };
-        }
-    }
-
-    public static WorkoutDto Create(Workout entity)
-    {
-        return entity != null ? Projection.Compile().Invoke(entity) : null;
-    }
+    // private static Expression<Func<Workout, WorkoutDto>> Projection
+    // {
+    //     get
+    //     {
+    //         return entity => new WorkoutDto
+    //         {
+    //             Id = entity.Id,
+    //             Code = entity.Code,
+    //             Name = entity.Name,
+    //             Title = entity.Title,
+    //             Type = entity.Type,
+    //             Notes = entity.Notes,
+    //             Benefits = entity.Benefits,
+    //             EstimatedCalories = entity.EstimatedCalories,
+    //             Index = entity.Index,
+    //             Steps = entity.Steps != null && entity.Steps.Count > 0
+    //                 ? entity.Steps.OrderBy(x => x.Index).Select(WorkoutStepDto.Create).ToArray()
+    //                 : Array.Empty<WorkoutStepDto>()
+    //         };
+    //     }
+    // }
+    //
+    // public static WorkoutDto Create(Workout entity)
+    // {
+    //     return entity != null ? Projection.Compile().Invoke(entity) : null;
+    // }
 }

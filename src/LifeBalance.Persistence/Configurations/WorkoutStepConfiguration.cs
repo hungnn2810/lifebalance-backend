@@ -11,6 +11,7 @@ public class WorkoutStepConfiguration : IEntityTypeConfiguration<WorkoutStep>
         builder.ToTable("workout_steps");
         builder.HasKey(ws => ws.Id);
         builder.Property(ws => ws.Id).HasColumnName("id");
+        builder.Property(ws => ws.Code).HasColumnName("code");
         builder.Property(ws => ws.WorkoutId).HasColumnName("workout_id");
         builder.Property(ws => ws.Title).HasColumnName("title");
         builder.Property(ws => ws.Index).HasColumnName("index");

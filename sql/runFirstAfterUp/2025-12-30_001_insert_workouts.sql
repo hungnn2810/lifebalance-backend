@@ -10,7 +10,7 @@ INSERT INTO workouts (
     "index"
 ) VALUES (
      '202126a3-f7f9-4468-b3ab-ec6e16a20c14',
-     'GYM001',
+     'GYM1',
      'Leg & Glute Workout',
      'Lower Body – Squat Focus',
      'Gym',
@@ -29,12 +29,14 @@ Brace = tighten your core as if preparing to be punched.',
 
 INSERT INTO workout_steps (
     id,
+    code,
     workout_id,
     title,
     "index",
     description
 ) VALUES (
      '01e423f6-dd98-4cf7-9dc7-597f15907744',
+     'GYM1_STEP1',
      '202126a3-f7f9-4468-b3ab-ec6e16a20c14',
      'Standard Warm-up (7–10 minutes)',
      0,
@@ -51,12 +53,14 @@ Ramp-up sets for the main lift:
 
 INSERT INTO workout_steps (
     id,
+    code,
     workout_id,
     title,
     "index",
     description
 ) VALUES (
     'a557f1a9-6823-4499-a170-4817c465711e',
+    'GYM1_STEP2',
     '202126a3-f7f9-4468-b3ab-ec6e16a20c14',
     'Squat (Goblet / Back Squat)',
     1,

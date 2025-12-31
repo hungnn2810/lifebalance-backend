@@ -12,22 +12,22 @@ public class WorkoutStepMediaDto
     public string Url { get; set; }
     public int SortOrder { get; set; }
 
-    private static Expression<Func<WorkoutStepMedia, WorkoutStepMediaDto>> Projection
-    {
-        get
-        {
-            return entity => new WorkoutStepMediaDto
-            {
-                MediaType = entity.MediaType,
-                ObjectKey = entity.ObjectKey,
-                Url = entity.Url,
-                SortOrder = entity.SortOrder
-            };
-        }
-    }
-    
-    public static WorkoutStepMediaDto Create(WorkoutStepMedia entity)
-    {
-        return entity != null ? Projection.Compile().Invoke(entity) : null;
-    }
+    // private static Expression<Func<WorkoutStepMedia, WorkoutStepMediaDto>> Projection
+    // {
+    //     get
+    //     {
+    //         return entity => new WorkoutStepMediaDto
+    //         {
+    //             MediaType = entity.MediaType,
+    //             ObjectKey = entity.ObjectKey,
+    //             Url = entity.Url,
+    //             SortOrder = entity.SortOrder
+    //         };
+    //     }
+    // }
+    //
+    // public static WorkoutStepMediaDto Create(WorkoutStepMedia entity)
+    // {
+    //     return entity != null ? Projection.Compile().Invoke(entity) : null;
+    // }
 }

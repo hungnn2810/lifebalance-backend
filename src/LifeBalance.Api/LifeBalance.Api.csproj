@@ -17,4 +17,28 @@
       <ProjectReference Include="..\LifeBalance.Persistence\LifeBalance.Persistence.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <EmbeddedResource Update="Resources\Workouts.en.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Workouts.en.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Workouts.vi.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Workouts.vi.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Resources\Workouts.en.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Workouts.en.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\Workouts.vi.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Workouts.vi.resx</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
 </Project>

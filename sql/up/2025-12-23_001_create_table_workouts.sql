@@ -15,6 +15,7 @@ CREATE TABLE IF NOT EXISTS workouts (
 
 CREATE TABLE IF NOT EXISTS workout_steps (
     id UUID NOT NULL,
+    code VARCHAR(128) NOT NULL,
     workout_id UUID NOT NULL,
     title VARCHAR(256) NOT NULL,
     "index" SMALLINT NOT NULL DEFAULT 0,

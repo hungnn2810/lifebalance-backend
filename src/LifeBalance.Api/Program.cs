@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Security.Claims;
 using System.Text;
 using LifeBalance.Api.Middlewares;
@@ -5,6 +6,7 @@ using LifeBalance.Application.Exceptions.Filters;
 using LifeBalance.Application.Extensions;
 using LifeBalance.Persistence.Extensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -55,6 +57,21 @@ public class Program
                 options.SerializerSettings.DateFormatString = "yyyy-MM-ddTHH:mm:ss.ffff";
                 options.SerializerSettings.DateParseHandling = DateParseHandling.None;
             });
+        
+        builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+        
+        builder.Services.Configure<RequestLocalizationOptions>(options =>
+        {
+            var cultures = new[]
+            {
+                new CultureInfo("en"),
+                new CultureInfo("vi")
+            };
+
+            options.DefaultRequestCulture = new RequestCulture("en");
+            options.SupportedCultures = cultures;
+            options.SupportedUICultures = cultures;
+        });
         
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();

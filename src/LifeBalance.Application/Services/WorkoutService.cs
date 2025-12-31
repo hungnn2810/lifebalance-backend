@@ -67,9 +67,12 @@ public class WorkoutService(IUnitOfWork unitOfWork, IServiceScopeFactory service
     {
         using var scope = serviceScopeFactory.CreateScope();
         var repository = scope.ServiceProvider.GetRequiredService<IWorkoutRepository>();
+        var localizer = scope.ServiceProvider.GetRequiredService<IWorkoutLocalizationService>();
+        
         var query = BuildCriteria(criteria, repository);
 
         var listResult = await query
+            .Include(x => x.Steps)
             .OrderBy(x => x.Index)
             .Skip(criteria.PageIndex * criteria.PageSize)
             .Take(criteria.PageSize)
@@ -78,7 +81,7 @@ public class WorkoutService(IUnitOfWork unitOfWork, IServiceScopeFactory service
 
         if (listResult.Count != 0)
         {
-            result.AddRangeData(listResult.Select(WorkoutDto.Create));
+            result.AddRangeData(listResult.Select(localizer.Localize));
         }
     }
 
